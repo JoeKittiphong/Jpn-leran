@@ -1,342 +1,418 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Trophy, RotateCcw, Home, Sparkles, BookOpen } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ฝึกภาษาญี่ปุ่น: Hiragana & Katakana</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Font */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-// --- DATASETS ---
-
-const hiraganaData = [
-  // Basic
-  { char: 'あ', romaji: 'a', thai: 'อะ' }, { char: 'い', romaji: 'i', thai: 'อิ' }, { char: 'う', romaji: 'u', thai: 'อุ' }, { char: 'え', romaji: 'e', thai: 'เอะ' }, { char: 'お', romaji: 'o', thai: 'โอะ' },
-  { char: 'か', romaji: 'ka', thai: 'คะ' }, { char: 'き', romaji: 'ki', thai: 'คิ' }, { char: 'く', romaji: 'ku', thai: 'คุ' }, { char: 'け', romaji: 'ke', thai: 'เคะ' }, { char: 'こ', romaji: 'ko', thai: 'โคะ' },
-  { char: 'さ', romaji: 'sa', thai: 'ซะ' }, { char: 'し', romaji: 'shi', thai: 'ชิ' }, { char: 'す', romaji: 'su', thai: 'สุ' }, { char: 'せ', romaji: 'se', thai: 'เซะ' }, { char: 'そ', romaji: 'so', thai: 'โซะ' },
-  { char: 'た', romaji: 'ta', thai: 'ทะ' }, { char: 'ち', romaji: 'chi', thai: 'ชิ' }, { char: 'つ', romaji: 'tsu', thai: 'สึ' }, { char: 'て', romaji: 'te', thai: 'เทะ' }, { char: 'と', romaji: 'to', thai: 'โทะ' },
-  { char: 'な', romaji: 'na', thai: 'นะ' }, { char: 'に', romaji: 'ni', thai: 'นิ' }, { char: 'ぬ', romaji: 'nu', thai: 'นุ' }, { char: 'ね', romaji: 'ne', thai: 'เนะ' }, { char: 'の', romaji: 'no', thai: 'โนะ' },
-  { char: 'は', romaji: 'ha', thai: 'ฮะ' }, { char: 'ひ', romaji: 'hi', thai: 'ฮิ' }, { char: 'ふ', romaji: 'fu', thai: 'ฟุ' }, { char: 'へ', romaji: 'he', thai: 'เฮะ' }, { char: 'ほ', romaji: 'ho', thai: 'โฮะ' },
-  { char: 'ま', romaji: 'ma', thai: 'มะ' }, { char: 'み', romaji: 'mi', thai: 'มิ' }, { char: 'む', romaji: 'mu', thai: 'มุ' }, { char: 'め', romaji: 'me', thai: 'เมะ' }, { char: 'も', romaji: 'mo', thai: 'โมะ' },
-  { char: 'や', romaji: 'ya', thai: 'ยะ' }, { char: 'ゆ', romaji: 'yu', thai: 'ยุ' }, { char: 'よ', romaji: 'yo', thai: 'โยะ' },
-  { char: 'ら', romaji: 'ra', thai: 'ระ' }, { char: 'り', romaji: 'ri', thai: 'ริ' }, { char: 'る', romaji: 'ru', thai: 'รุ' }, { char: 'れ', romaji: 're', thai: 'เระ' }, { char: 'ろ', romaji: 'ro', thai: 'โระ' },
-  { char: 'わ', romaji: 'wa', thai: 'วะ' }, { char: 'を', romaji: 'wo', thai: 'โวะ' }, { char: 'ん', romaji: 'n', thai: 'อึน/น' },
-  // Dakuon & Handakuon
-  { char: 'が', romaji: 'ga', thai: 'กะ' }, { char: 'ぎ', romaji: 'gi', thai: 'กิ' }, { char: 'ぐ', romaji: 'gu', thai: 'กุ' }, { char: 'げ', romaji: 'ge', thai: 'เกะ' }, { char: 'ご', romaji: 'go', thai: 'โกะ' },
-  { char: 'ざ', romaji: 'za', thai: 'ซะ (Za)' }, { char: 'じ', romaji: 'ji', thai: 'จิ (Ji)' }, { char: 'ず', romaji: 'zu', thai: 'ซุ (Zu)' }, { char: 'ぜ', romaji: 'ze', thai: 'เซะ (Ze)' }, { char: 'ぞ', romaji: 'zo', thai: 'โซะ (Zo)' },
-  { char: 'だ', romaji: 'da', thai: 'ดะ' }, { char: 'ぢ', romaji: 'ji', thai: 'จิ (Di)' }, { char: 'づ', romaji: 'zu', thai: 'ซุ (Du)' }, { char: 'で', romaji: 'de', thai: 'เดะ' }, { char: 'ど', romaji: 'do', thai: 'โดะ' },
-  { char: 'ば', romaji: 'ba', thai: 'บะ' }, { char: 'び', romaji: 'bi', thai: 'บิ' }, { char: 'ぶ', romaji: 'bu', thai: 'บุ' }, { char: 'べ', romaji: 'be', thai: 'เบะ' }, { char: 'ぼ', romaji: 'bo', thai: 'โบะ' },
-  { char: 'ぱ', romaji: 'pa', thai: 'พะ' }, { char: 'ぴ', romaji: 'pi', thai: 'พิ' }, { char: 'ぷ', romaji: 'pu', thai: 'พุ' }, { char: 'ぺ', romaji: 'pe', thai: 'เพะ' }, { char: 'ぽ', romaji: 'po', thai: 'โพะ' },
-];
-
-const katakanaData = [
-  // Basic
-  { char: 'ア', romaji: 'a', thai: 'อะ' }, { char: 'イ', romaji: 'i', thai: 'อิ' }, { char: 'ウ', romaji: 'u', thai: 'อุ' }, { char: 'エ', romaji: 'e', thai: 'เอะ' }, { char: 'オ', romaji: 'o', thai: 'โอะ' },
-  { char: 'カ', romaji: 'ka', thai: 'คะ' }, { char: 'キ', romaji: 'ki', thai: 'คิ' }, { char: 'ク', romaji: 'ku', thai: 'คุ' }, { char: 'ケ', romaji: 'ke', thai: 'เคะ' }, { char: 'コ', romaji: 'ko', thai: 'โคะ' },
-  { char: 'サ', romaji: 'sa', thai: 'ซะ' }, { char: 'シ', romaji: 'shi', thai: 'ชิ' }, { char: 'ス', romaji: 'su', thai: 'สุ' }, { char: 'セ', romaji: 'se', thai: 'เซะ' }, { char: 'ソ', romaji: 'so', thai: 'โซะ' },
-  { char: 'タ', romaji: 'ta', thai: 'ทะ' }, { char: 'チ', romaji: 'chi', thai: 'ชิ' }, { char: 'ツ', romaji: 'tsu', thai: 'สึ' }, { char: 'テ', romaji: 'te', thai: 'เทะ' }, { char: 'ト', romaji: 'to', thai: 'โทะ' },
-  { char: 'ナ', romaji: 'na', thai: 'นะ' }, { char: 'ニ', romaji: 'ni', thai: 'นิ' }, { char: 'ヌ', romaji: 'nu', thai: 'นุ' }, { char: 'ネ', romaji: 'ne', thai: 'เนะ' }, { char: 'ノ', romaji: 'no', thai: 'โนะ' },
-  { char: 'ハ', romaji: 'ha', thai: 'ฮะ' }, { char: 'ヒ', romaji: 'hi', thai: 'ฮิ' }, { char: 'フ', romaji: 'fu', thai: 'ฟุ' }, { char: 'ヘ', romaji: 'he', thai: 'เฮะ' }, { char: 'ホ', romaji: 'ho', thai: 'โฮะ' },
-  { char: 'マ', romaji: 'ma', thai: 'มะ' }, { char: 'ミ', romaji: 'mi', thai: 'มิ' }, { char: 'ム', romaji: 'mu', thai: 'มุ' }, { char: 'メ', romaji: 'me', thai: 'เมะ' }, { char: 'モ', romaji: 'mo', thai: 'โมะ' },
-  { char: 'ヤ', romaji: 'ya', thai: 'ยะ' }, { char: 'ユ', romaji: 'yu', thai: 'ยุ' }, { char: 'ヨ', romaji: 'yo', thai: 'โยะ' },
-  { char: 'ラ', romaji: 'ra', thai: 'ระ' }, { char: 'リ', romaji: 'ri', thai: 'ริ' }, { char: 'ル', romaji: 'ru', thai: 'รุ' }, { char: 'レ', romaji: 're', thai: 'เระ' }, { char: 'ロ', romaji: 'ro', thai: 'โระ' },
-  { char: 'ワ', romaji: 'wa', thai: 'วะ' }, { char: 'ヲ', romaji: 'wo', thai: 'โวะ' }, { char: 'ン', romaji: 'n', thai: 'อึน/น' },
-  // Dakuon & Handakuon
-  { char: 'ガ', romaji: 'ga', thai: 'กะ' }, { char: 'ギ', romaji: 'gi', thai: 'กิ' }, { char: 'グ', romaji: 'gu', thai: 'กุ' }, { char: 'ゲ', romaji: 'ge', thai: 'เกะ' }, { char: 'ゴ', romaji: 'go', thai: 'โกะ' },
-  { char: 'ザ', romaji: 'za', thai: 'ซะ (Za)' }, { char: 'ジ', romaji: 'ji', thai: 'จิ (Ji)' }, { char: 'ズ', romaji: 'zu', thai: 'ซุ (Zu)' }, { char: 'ゼ', romaji: 'ze', thai: 'เซะ (Ze)' }, { char: 'ゾ', romaji: 'zo', thai: 'โซะ (Zo)' },
-  { char: 'ダ', romaji: 'da', thai: 'ดะ' }, { char: 'ヂ', romaji: 'ji', thai: 'จิ (Di)' }, { char: 'ヅ', romaji: 'zu', thai: 'ซุ (Du)' }, { char: 'デ', romaji: 'de', thai: 'เดะ' }, { char: 'ド', romaji: 'do', thai: 'โดะ' },
-  { char: 'バ', romaji: 'ba', thai: 'บะ' }, { char: 'ビ', romaji: 'bi', thai: 'บิ' }, { char: 'ブ', romaji: 'bu', thai: 'บุ' }, { char: 'ベ', romaji: 'be', thai: 'เบะ' }, { char: 'ボ', romaji: 'bo', thai: 'โบะ' },
-  { char: 'パ', romaji: 'pa', thai: 'พะ' }, { char: 'ピ', romaji: 'pi', thai: 'พิ' }, { char: 'プ', romaji: 'pu', thai: 'พุ' }, { char: 'ペ', romaji: 'pe', thai: 'เพะ' }, { char: 'ポ', romaji: 'po', thai: 'โพะ' },
-];
-
-export default function App() {
-  const [screen, setScreen] = useState('menu'); 
-  const [mode, setMode] = useState(null); 
-  const [activeData, setActiveData] = useState([]);
-  
-  const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [options, setOptions] = useState([]);
-  const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
-  const [gameState, setGameState] = useState('playing'); // playing, correct, wrong
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-
-  // ใช้ ref เพื่อเก็บคำถามล่าสุด ป้องกันการสุ่มเจอซ้ำทันที
-  const lastQuestionRef = useRef(null);
-
-  // Load high score
-  useEffect(() => {
-    if (mode && activeData.length > 0) {
-      const key = `highScore_${mode}`;
-      const saved = localStorage.getItem(key);
-      setHighScore(saved ? parseInt(saved, 10) : 0);
-      setScore(0);
-      // เริ่มเกมเมื่อข้อมูลพร้อม
-      generateQuestion(activeData);
-    }
-  }, [mode, activeData]);
-
-  const startGame = (selectedMode) => {
-    setMode(selectedMode);
-    let data = [];
-    if (selectedMode === 'hiragana') data = hiraganaData;
-    else if (selectedMode === 'katakana') data = katakanaData;
-    else if (selectedMode === 'mixed') data = [...hiraganaData, ...katakanaData];
-    
-    setActiveData(data);
-    setScreen('game');
-  };
-
-  const returnToMenu = () => {
-    setScreen('menu');
-    setMode(null);
-    setScore(0);
-    setGameState('playing');
-    setSelectedAnswer(null);
-    lastQuestionRef.current = null;
-  };
-
-  const generateQuestion = (dataOverride = null) => {
-    const data = dataOverride || activeData;
-    if (!data || data.length === 0) return;
-
-    // Reset States อย่างชัดเจน
-    setGameState('playing');
-    setSelectedAnswer(null);
-
-    // 1. Random Correct Answer (ไม่ให้ซ้ำกับข้อที่แล้ว)
-    let correct;
-    let attempts = 0;
-    do {
-        const randomIndex = Math.floor(Math.random() * data.length);
-        correct = data[randomIndex];
-        attempts++;
-    } while (
-        lastQuestionRef.current && 
-        correct.char === lastQuestionRef.current.char && 
-        data.length > 1 && 
-        attempts < 10
-    );
-    
-    lastQuestionRef.current = correct;
-
-    // 2. Random Distractors
-    let distractors = [];
-    while (distractors.length < 3) {
-      const randomDistractor = data[Math.floor(Math.random() * data.length)];
-      if (randomDistractor.char !== correct.char && !distractors.includes(randomDistractor)) {
-        distractors.push(randomDistractor);
-      }
-    }
-
-    // 3. Shuffle Options
-    const allOptions = [...distractors, correct];
-    for (let i = allOptions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
-    }
-
-    setCurrentQuestion(correct);
-    setOptions(allOptions);
-  };
-
-  const handleAnswer = (selected) => {
-    if (gameState !== 'playing') return;
-
-    setSelectedAnswer(selected);
-
-    if (selected.char === currentQuestion.char) {
-      setGameState('correct');
-      const newScore = score + 1;
-      setScore(newScore);
-      if (newScore > highScore) {
-        setHighScore(newScore);
-        localStorage.setItem(`highScore_${mode}`, newScore);
-      }
-      setTimeout(() => generateQuestion(), 1000);
-    } else {
-      setGameState('wrong');
-      setTimeout(() => {
-        setScore(0);
-        generateQuestion();
-      }, 1500);
-    }
-  };
-
-  // --- RENDER: MENU SCREEN ---
-  if (screen === 'menu') {
-    return (
-      <div className="min-h-screen bg-rose-50 flex flex-col items-center justify-center p-6 font-sans">
-        <div className="max-w-md w-full text-center space-y-8">
-          
-          <div className="space-y-2">
-            <div className="inline-block p-4 bg-white rounded-full shadow-md mb-2">
-              <BookOpen size={48} className="text-rose-500" />
-            </div>
-            <h1 className="text-4xl font-black text-slate-800 tracking-tight">ฝึกฝนภาษาญี่ปุ่น</h1>
-            <p className="text-slate-500">เลือกโหมดที่ต้องการฝึก</p>
-          </div>
-
-          <div className="grid gap-4">
-            <button 
-              onClick={() => startGame('hiragana')}
-              className="group relative bg-white hover:bg-rose-100 p-6 rounded-2xl shadow-sm border-2 border-rose-100 hover:border-rose-300 transition-all text-left flex items-center justify-between"
-            >
-              <div>
-                <span className="block text-2xl font-bold text-rose-600 group-hover:text-rose-700">Hiragana</span>
-                <span className="text-sm text-slate-400">อักษรพื้นฐาน (あ-ん)</span>
-              </div>
-              <span className="text-4xl opacity-20 group-hover:opacity-100 transition-opacity">あ</span>
-            </button>
-
-            <button 
-              onClick={() => startGame('katakana')}
-              className="group relative bg-white hover:bg-blue-50 p-6 rounded-2xl shadow-sm border-2 border-blue-100 hover:border-blue-300 transition-all text-left flex items-center justify-between"
-            >
-              <div>
-                <span className="block text-2xl font-bold text-blue-600 group-hover:text-blue-700">Katakana</span>
-                <span className="text-sm text-slate-400">สำหรับคำทับศัพท์ (ア-ン)</span>
-              </div>
-              <span className="text-4xl opacity-20 group-hover:opacity-100 transition-opacity text-blue-500">ア</span>
-            </button>
-
-            <button 
-              onClick={() => startGame('mixed')}
-              className="group relative bg-gradient-to-r from-rose-500 to-orange-400 p-6 rounded-2xl shadow-lg transform transition-transform hover:scale-[1.02] text-left flex items-center justify-between text-white"
-            >
-              <div>
-                <span className="block text-2xl font-bold">รวมมิตร (Mixed)</span>
-                <span className="text-sm opacity-90">ท้าทายความจำทั้งสองแบบ</span>
-              </div>
-              <div className="flex gap-1 text-2xl font-black opacity-80">
-                <span>あ</span><span>ア</span>
-              </div>
-            </button>
-          </div>
-
-        </div>
-      </div>
-    );
-  }
-
-  // --- RENDER: GAME SCREEN ---
-  if (!currentQuestion) return <div className="flex h-screen items-center justify-center">Loading...</div>;
-
-  const isKatakanaMode = mode === 'katakana';
-  const themeColor = isKatakanaMode ? 'blue' : 'rose';
-  
-  // Dynamic classes based on theme
-  const bgClass = isKatakanaMode ? 'bg-blue-50' : 'bg-rose-50';
-  const textMainClass = isKatakanaMode ? 'text-blue-600' : 'text-rose-600';
-  const borderClass = isKatakanaMode ? 'border-blue-100' : 'border-rose-100';
-
-  return (
-    <div className={`min-h-screen ${bgClass} flex flex-col items-center py-8 px-4 font-sans select-none transition-colors duration-500`}>
-      
-      {/* Header */}
-      <div className="w-full max-w-md flex justify-between items-center mb-6">
-        <button onClick={returnToMenu} className="p-2 bg-white rounded-xl shadow-sm text-slate-400 hover:text-slate-600 transition-colors">
-          <Home size={20} />
-        </button>
-        <div className="px-4 py-1 bg-white rounded-full shadow-sm text-xs font-bold text-slate-400 uppercase tracking-widest">
-           {mode === 'mixed' ? 'Mixed Mode' : (mode === 'hiragana' ? 'Hiragana' : 'Katakana')}
-        </div>
-        <div className="w-10"></div>
-      </div>
-
-      {/* Score Card */}
-      <div className="w-full max-w-md flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm">
-        <div className="flex flex-col">
-          <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">คะแนน</span>
-          <span className={`text-2xl font-bold ${textMainClass}`}>{score}</span>
-        </div>
-        <div className="flex flex-col items-end">
-          <div className="flex items-center gap-1 text-slate-500">
-            <Trophy size={16} className="text-yellow-500" />
-            <span className="text-xs font-bold uppercase tracking-wider">สูงสุด</span>
-          </div>
-          <span className="text-xl font-bold text-slate-700">{highScore}</span>
-        </div>
-      </div>
-
-      {/* Main Question Card */}
-      <div className={`relative w-full max-w-md bg-white rounded-3xl shadow-xl p-10 mb-6 flex flex-col items-center justify-center transition-all duration-300 ${gameState === 'wrong' ? 'animate-shake border-2 border-red-400' : ''} ${gameState === 'correct' ? 'border-2 border-green-400' : ''}`}>
-        
-        {gameState === 'correct' && (
-          <div className="absolute top-4 right-4 text-green-500 animate-bounce">
-            <Sparkles size={32} />
-          </div>
-        )}
-        
-        <div className="mb-4">
-           <span className="text-sm text-slate-400 bg-slate-100 px-3 py-1 rounded-full">นี่คือตัวอะไร?</span>
-        </div>
-        
-        <h1 className={`text-9xl font-black mb-6 text-slate-800 transition-transform duration-200 ${gameState === 'correct' ? 'scale-110 text-green-600' : ''} ${gameState === 'wrong' ? 'text-red-500' : ''}`}>
-          {currentQuestion.char}
-        </h1>
-
-        <div className="h-8">
-          {gameState === 'wrong' && (
-             <p className="text-red-500 font-bold text-lg animate-pulse">เฉลย: {currentQuestion.thai}</p>
-          )}
-          {gameState === 'correct' && (
-             <p className="text-green-600 font-bold text-lg">ถูกต้อง! ({currentQuestion.romaji})</p>
-          )}
-        </div>
-      </div>
-
-      {/* Options Grid */}
-      <div className="w-full max-w-md grid grid-cols-2 gap-4">
-        {options.map((option) => {
-          let btnClass = `bg-white hover:${isKatakanaMode ? 'bg-blue-50' : 'bg-rose-50'} border-2 ${borderClass} text-slate-700 shadow-sm`; 
-          
-          // Logic การแสดงผลปุ่ม
-          if (gameState === 'correct') {
-            if (option.char === currentQuestion.char) {
-              btnClass = "bg-green-100 border-green-500 text-green-800 shadow-md transform scale-105";
-            } else {
-              btnClass = "opacity-40 bg-gray-50 border-transparent cursor-not-allowed";
-            }
-          } else if (gameState === 'wrong') {
-             if (option.char === currentQuestion.char) {
-               btnClass = "bg-green-100 border-green-500 text-green-800 opacity-70";
-             } else if (selectedAnswer && selectedAnswer.char === option.char) {
-               btnClass = "bg-red-100 border-red-500 text-red-800";
-             } else {
-               btnClass = "opacity-40 bg-gray-50 border-transparent cursor-not-allowed";
-             }
-          }
-
-          return (
-            <button
-              // ใช้ option.char + option.thai เป็น key เพื่อให้แน่ใจว่า React จะสร้างปุ่มใหม่ (reset state) เมื่อตัวเลือกเปลี่ยน
-              key={`${option.char}-${option.thai}`} 
-              onClick={() => handleAnswer(option)}
-              disabled={gameState !== 'playing'}
-              className={`h-20 rounded-xl text-xl md:text-2xl font-bold transition-all duration-200 active:scale-95 flex items-center justify-center relative overflow-hidden ${btnClass}`}
-            >
-              {option.thai}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Manual Reset Button */}
-      <button 
-        onClick={() => { setScore(0); generateQuestion(); }}
-        className="mt-8 flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors text-sm"
-      >
-        <RotateCcw size={16} />
-        <span>เริ่มใหม่ / รีเซ็ตคะแนน</span>
-      </button>
-
-      <style>{`
+        /* Animations */
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
         .animate-shake {
-          animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
         }
-      `}</style>
-    </div>
-  );
-}
 
-      
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .animate-bounce-in {
+            animation: bounce-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-rose-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-500" id="main-body">
+
+    <!-- ================= MENU SCREEN ================= -->
+    <div id="menu-screen" class="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto animate-pop">
+        
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-lg mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h1 class="text-3xl font-black text-slate-800 tracking-tight mb-2">ฝึกฝนภาษาญี่ปุ่น</h1>
+            <p class="text-slate-500 text-sm">เลือกโหมดที่ต้องการฝึก</p>
+        </div>
+
+        <div class="w-full space-y-4">
+            <button onclick="startGame('hiragana')" class="w-full relative bg-white active:bg-rose-50 p-5 rounded-2xl shadow-sm border-2 border-rose-100 active:border-rose-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
+                <div>
+                    <span class="block text-xl font-bold text-rose-600">Hiragana</span>
+                    <span class="text-xs text-slate-400">อักษรพื้นฐาน (あ-ん)</span>
+                </div>
+                <span class="text-4xl text-rose-100 font-bold">あ</span>
+            </button>
+
+            <button onclick="startGame('katakana')" class="w-full relative bg-white active:bg-blue-50 p-5 rounded-2xl shadow-sm border-2 border-blue-100 active:border-blue-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
+                <div>
+                    <span class="block text-xl font-bold text-blue-600">Katakana</span>
+                    <span class="text-xs text-slate-400">คำทับศัพท์ (ア-ン)</span>
+                </div>
+                <span class="text-4xl text-blue-100 font-bold">ア</span>
+            </button>
+
+            <button onclick="startGame('mixed')" class="w-full relative bg-gradient-to-r from-rose-500 to-orange-400 active:opacity-90 p-5 rounded-2xl shadow-lg shadow-rose-200 transition-all text-left flex items-center justify-between text-white active:scale-[0.98]">
+                <div>
+                    <span class="block text-xl font-bold">รวมมิตร (Mixed)</span>
+                    <span class="text-xs opacity-90">ท้าทายความจำทั้งสองแบบ</span>
+                </div>
+                <div class="flex gap-1 text-2xl font-black opacity-30">
+                    <span>あ</span><span>ア</span>
+                </div>
+            </button>
+        </div>
+        
+        <p class="mt-8 text-xs text-slate-400">© 2025 Japanese Quiz App</p>
+    </div>
+
+    <!-- ================= GAME SCREEN ================= -->
+    <div id="game-screen" class="hidden flex-1 flex-col items-center py-6 px-4 w-full max-w-md mx-auto">
+        
+        <!-- Navbar -->
+        <div class="w-full flex justify-between items-center mb-6">
+            <button onclick="returnToMenu()" class="p-3 bg-white rounded-xl shadow-sm text-slate-400 active:text-slate-600 active:scale-95 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </button>
+            <div id="mode-badge" class="px-4 py-1.5 bg-white rounded-full shadow-sm text-xs font-bold text-slate-400 uppercase tracking-widest">
+                MODE
+            </div>
+            <div class="w-10"></div>
+        </div>
+
+        <!-- Score Board -->
+        <div class="w-full flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+            <div class="flex flex-col">
+                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">คะแนนต่อเนื่อง</span>
+                <span id="score-display" class="text-2xl font-bold text-rose-600 transition-all">0</span>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center gap-1 text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2h-6c-2.21 0-4 1.79-4 4v5h14V6c0-2.21-1.79-4-4-4z"/></svg>
+                    <span class="text-[10px] font-bold uppercase tracking-wider">สูงสุด</span>
+                </div>
+                <span id="highscore-display" class="text-xl font-bold text-slate-700">0</span>
+            </div>
+        </div>
+
+        <!-- Question Card -->
+        <div id="card-container" class="relative w-full bg-white rounded-3xl shadow-xl p-8 mb-6 flex flex-col items-center justify-center min-h-[280px] transition-all duration-200 border-2 border-transparent">
+            
+            <div id="sparkle-icon" class="hidden absolute top-4 right-4 text-green-500 animate-bounce-in">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 3v4"/><path d="M3 5h4"/><path d="M3 9h4"/></svg>
+            </div>
+
+            <div class="mb-4">
+                <span class="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full">นี่คือตัวอะไร?</span>
+            </div>
+            
+            <h1 id="question-char" class="text-9xl font-black mb-4 text-slate-800 transition-all duration-200">
+                ?
+            </h1>
+
+            <div class="h-6 w-full text-center">
+                <p id="feedback-text" class="font-bold text-lg"></p>
+            </div>
+        </div>
+
+        <!-- Options Grid -->
+        <div id="options-grid" class="w-full grid grid-cols-2 gap-3 mb-6">
+            <!-- Buttons injected by JS -->
+        </div>
+
+        <!-- Reset Button -->
+        <button onclick="resetScore()" class="mt-auto flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors text-xs p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12"/><path d="M3 3v9h9"/></svg>
+            <span>เริ่มใหม่ / รีเซ็ตคะแนน</span>
+        </button>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // --- DATASETS ---
+        const hiraganaData = [
+            { char: 'あ', romaji: 'a', thai: 'อะ' }, { char: 'い', romaji: 'i', thai: 'อิ' }, { char: 'う', romaji: 'u', thai: 'อุ' }, { char: 'え', romaji: 'e', thai: 'เอะ' }, { char: 'お', romaji: 'o', thai: 'โอะ' },
+            { char: 'か', romaji: 'ka', thai: 'คะ' }, { char: 'き', romaji: 'ki', thai: 'คิ' }, { char: 'く', romaji: 'ku', thai: 'คุ' }, { char: 'け', romaji: 'ke', thai: 'เคะ' }, { char: 'こ', romaji: 'ko', thai: 'โคะ' },
+            { char: 'さ', romaji: 'sa', thai: 'ซะ' }, { char: 'し', romaji: 'shi', thai: 'ชิ' }, { char: 'す', romaji: 'su', thai: 'สุ' }, { char: 'せ', romaji: 'se', thai: 'เซะ' }, { char: 'そ', romaji: 'so', thai: 'โซะ' },
+            { char: 'た', romaji: 'ta', thai: 'ทะ' }, { char: 'ち', romaji: 'chi', thai: 'ชิ' }, { char: 'つ', romaji: 'tsu', thai: 'สึ' }, { char: 'て', romaji: 'te', thai: 'เทะ' }, { char: 'と', romaji: 'to', thai: 'โทะ' },
+            { char: 'な', romaji: 'na', thai: 'นะ' }, { char: 'に', romaji: 'ni', thai: 'นิ' }, { char: 'ぬ', romaji: 'nu', thai: 'นุ' }, { char: 'ね', romaji: 'ne', thai: 'เนะ' }, { char: 'の', romaji: 'no', thai: 'โนะ' },
+            { char: 'は', romaji: 'ha', thai: 'ฮะ' }, { char: 'ひ', romaji: 'hi', thai: 'ฮิ' }, { char: 'ふ', romaji: 'fu', thai: 'ฟุ' }, { char: 'へ', romaji: 'he', thai: 'เฮะ' }, { char: 'ほ', romaji: 'ho', thai: 'โฮะ' },
+            { char: 'ま', romaji: 'ma', thai: 'มะ' }, { char: 'み', romaji: 'mi', thai: 'มิ' }, { char: 'む', romaji: 'mu', thai: 'มุ' }, { char: 'め', romaji: 'me', thai: 'เมะ' }, { char: 'も', romaji: 'mo', thai: 'โมะ' },
+            { char: 'や', romaji: 'ya', thai: 'ยะ' }, { char: 'ゆ', romaji: 'yu', thai: 'ยุ' }, { char: 'よ', romaji: 'yo', thai: 'โยะ' },
+            { char: 'ら', romaji: 'ra', thai: 'ระ' }, { char: 'り', romaji: 'ri', thai: 'ริ' }, { char: 'る', romaji: 'ru', thai: 'รุ' }, { char: 'れ', romaji: 're', thai: 'เระ' }, { char: 'ろ', romaji: 'ro', thai: 'โระ' },
+            { char: 'わ', romaji: 'wa', thai: 'วะ' }, { char: 'を', romaji: 'wo', thai: 'โวะ' }, { char: 'ん', romaji: 'n', thai: 'อึน/น' },
+            { char: 'が', romaji: 'ga', thai: 'กะ' }, { char: 'ぎ', romaji: 'gi', thai: 'กิ' }, { char: 'ぐ', romaji: 'gu', thai: 'กุ' }, { char: 'げ', romaji: 'ge', thai: 'เกะ' }, { char: 'ご', romaji: 'go', thai: 'โกะ' },
+            { char: 'ざ', romaji: 'za', thai: 'ซะ (Za)' }, { char: 'じ', romaji: 'ji', thai: 'จิ (Ji)' }, { char: 'ず', romaji: 'zu', thai: 'ซุ (Zu)' }, { char: 'ぜ', romaji: 'ze', thai: 'เซะ (Ze)' }, { char: 'ぞ', romaji: 'zo', thai: 'โซะ (Zo)' },
+            { char: 'だ', romaji: 'da', thai: 'ดะ' }, { char: 'ぢ', romaji: 'ji', thai: 'จิ (Di)' }, { char: 'づ', romaji: 'zu', thai: 'ซุ (Du)' }, { char: 'で', romaji: 'de', thai: 'เดะ' }, { char: 'ど', romaji: 'do', thai: 'โดะ' },
+            { char: 'ば', romaji: 'ba', thai: 'บะ' }, { char: 'び', romaji: 'bi', thai: 'บิ' }, { char: 'ぶ', romaji: 'bu', thai: 'บุ' }, { char: 'べ', romaji: 'be', thai: 'เบะ' }, { char: 'ぼ', romaji: 'bo', thai: 'โบะ' },
+            { char: 'ぱ', romaji: 'pa', thai: 'พะ' }, { char: 'ぴ', romaji: 'pi', thai: 'พิ' }, { char: 'ぷ', romaji: 'pu', thai: 'พุ' }, { char: 'ぺ', romaji: 'pe', thai: 'เพะ' }, { char: 'ぽ', romaji: 'po', thai: 'โพะ' },
+        ];
+
+        const katakanaData = [
+            { char: 'ア', romaji: 'a', thai: 'อะ' }, { char: 'イ', romaji: 'i', thai: 'อิ' }, { char: 'ウ', romaji: 'u', thai: 'อุ' }, { char: 'エ', romaji: 'e', thai: 'เอะ' }, { char: 'オ', romaji: 'o', thai: 'โอะ' },
+            { char: 'カ', romaji: 'ka', thai: 'คะ' }, { char: 'キ', romaji: 'ki', thai: 'คิ' }, { char: 'ク', romaji: 'ku', thai: 'คุ' }, { char: 'ケ', romaji: 'ke', thai: 'เคะ' }, { char: 'コ', romaji: 'ko', thai: 'โคะ' },
+            { char: 'サ', romaji: 'sa', thai: 'ซะ' }, { char: 'シ', romaji: 'shi', thai: 'ชิ' }, { char: 'ス', romaji: 'su', thai: 'สุ' }, { char: 'セ', romaji: 'se', thai: 'เซะ' }, { char: 'ソ', romaji: 'so', thai: 'โซะ' },
+            { char: 'タ', romaji: 'ta', thai: 'ทะ' }, { char: 'チ', romaji: 'chi', thai: 'ชิ' }, { char: 'ツ', romaji: 'tsu', thai: 'สึ' }, { char: 'テ', romaji: 'te', thai: 'เทะ' }, { char: 'ト', romaji: 'to', thai: 'โทะ' },
+            { char: 'ナ', romaji: 'na', thai: 'นะ' }, { char: 'ニ', romaji: 'ni', thai: 'นิ' }, { char: 'ヌ', romaji: 'nu', thai: 'นุ' }, { char: 'ネ', romaji: 'ne', thai: 'เนะ' }, { char: 'ノ', romaji: 'no', thai: 'โนะ' },
+            { char: 'ハ', romaji: 'ha', thai: 'ฮะ' }, { char: 'ヒ', romaji: 'hi', thai: 'ฮิ' }, { char: 'フ', romaji: 'fu', thai: 'ฟุ' }, { char: 'ヘ', romaji: 'he', thai: 'เฮะ' }, { char: 'ホ', romaji: 'ho', thai: 'โฮะ' },
+            { char: 'マ', romaji: 'ma', thai: 'มะ' }, { char: 'ミ', romaji: 'mi', thai: 'มิ' }, { char: 'ム', romaji: 'mu', thai: 'มุ' }, { char: 'メ', romaji: 'me', thai: 'เมะ' }, { char: 'モ', romaji: 'mo', thai: 'โมะ' },
+            { char: 'ヤ', romaji: 'ya', thai: 'ยะ' }, { char: 'ユ', romaji: 'yu', thai: 'ยุ' }, { char: 'ヨ', romaji: 'yo', thai: 'โยะ' },
+            { char: 'ラ', romaji: 'ra', thai: 'ระ' }, { char: 'リ', romaji: 'ri', thai: 'ริ' }, { char: 'ル', romaji: 'ru', thai: 'รุ' }, { char: 'レ', romaji: 're', thai: 'เระ' }, { char: 'ロ', romaji: 'ro', thai: 'โระ' },
+            { char: 'ワ', romaji: 'wa', thai: 'วะ' }, { char: 'ヲ', romaji: 'wo', thai: 'โวะ' }, { char: 'ン', romaji: 'n', thai: 'อึน/น' },
+            { char: 'ガ', romaji: 'ga', thai: 'กะ' }, { char: 'ギ', romaji: 'gi', thai: 'กิ' }, { char: 'グ', romaji: 'gu', thai: 'กุ' }, { char: 'ゲ', romaji: 'ge', thai: 'เกะ' }, { char: 'ゴ', romaji: 'go', thai: 'โกะ' },
+            { char: 'ザ', romaji: 'za', thai: 'ซะ (Za)' }, { char: 'ジ', romaji: 'ji', thai: 'จิ (Ji)' }, { char: 'ズ', romaji: 'zu', thai: 'ซุ (Zu)' }, { char: 'ゼ', romaji: 'ze', thai: 'เซะ (Ze)' }, { char: 'ゾ', romaji: 'zo', thai: 'โซะ (Zo)' },
+            { char: 'ダ', romaji: 'da', thai: 'ดะ' }, { char: 'ヂ', romaji: 'ji', thai: 'จิ (Di)' }, { char: 'ヅ', romaji: 'zu', thai: 'ซุ (Du)' }, { char: 'デ', romaji: 'de', thai: 'เดะ' }, { char: 'ド', romaji: 'do', thai: 'โดะ' },
+            { char: 'バ', romaji: 'ba', thai: 'บะ' }, { char: 'ビ', romaji: 'bi', thai: 'บิ' }, { char: 'ブ', romaji: 'bu', thai: 'บุ' }, { char: 'ベ', romaji: 'be', thai: 'เบะ' }, { char: 'ボ', romaji: 'bo', thai: 'โบะ' },
+            { char: 'パ', romaji: 'pa', thai: 'พะ' }, { char: 'ピ', romaji: 'pi', thai: 'พิ' }, { char: 'プ', romaji: 'pu', thai: 'พุ' }, { char: 'ペ', romaji: 'pe', thai: 'เพะ' }, { char: 'ポ', romaji: 'po', thai: 'โพะ' },
+        ];
+
+        // --- STATE VARIABLES ---
+        let currentMode = null;
+        let activeData = [];
+        let currentQuestion = null;
+        let score = 0;
+        let highScore = 0;
+        let isProcessing = false; 
+        let lastChar = null; 
+
+        // --- DOM ELEMENTS ---
+        const menuScreen = document.getElementById('menu-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const mainBody = document.getElementById('main-body');
+        
+        const questionChar = document.getElementById('question-char');
+        const feedbackText = document.getElementById('feedback-text');
+        const optionsGrid = document.getElementById('options-grid');
+        const scoreDisplay = document.getElementById('score-display');
+        const highscoreDisplay = document.getElementById('highscore-display');
+        const modeBadge = document.getElementById('mode-badge');
+        const cardContainer = document.getElementById('card-container');
+        const sparkleIcon = document.getElementById('sparkle-icon');
+
+        // --- FUNCTIONS ---
+
+        function startGame(mode) {
+            currentMode = mode;
+            score = 0;
+            lastChar = null;
+
+            // Set Data Source
+            if (mode === 'hiragana') activeData = hiraganaData;
+            else if (mode === 'katakana') activeData = katakanaData;
+            else if (mode === 'mixed') activeData = [...hiraganaData, ...katakanaData];
+
+            // Theme Styling
+            updateTheme(mode);
+
+            // Load High Score
+            const savedScore = localStorage.getItem(`quiz_highscore_${mode}`);
+            highScore = savedScore ? parseInt(savedScore) : 0;
+            updateScoreUI();
+
+            // Switch Screen
+            menuScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+
+            // Start First Question
+            generateQuestion();
+        }
+
+        function returnToMenu() {
+            gameScreen.classList.add('hidden');
+            menuScreen.classList.remove('hidden');
+            resetTheme();
+        }
+
+        function updateTheme(mode) {
+            mainBody.className = "min-h-screen flex flex-col transition-colors duration-500"; // Reset base
+            
+            if (mode === 'katakana') {
+                mainBody.classList.add('bg-blue-50', 'text-slate-800');
+                modeBadge.innerText = "KATAKANA";
+                scoreDisplay.classList.remove('text-rose-600');
+                scoreDisplay.classList.add('text-blue-600');
+            } else if (mode === 'mixed') {
+                mainBody.classList.add('bg-orange-50', 'text-slate-800');
+                modeBadge.innerText = "MIXED MODE";
+                scoreDisplay.classList.remove('text-rose-600');
+                scoreDisplay.classList.add('text-orange-600');
+            } else {
+                mainBody.classList.add('bg-rose-50', 'text-slate-800');
+                modeBadge.innerText = "HIRAGANA";
+                scoreDisplay.classList.remove('text-blue-600', 'text-orange-600');
+                scoreDisplay.classList.add('text-rose-600');
+            }
+        }
+
+        function resetTheme() {
+            mainBody.className = "bg-rose-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-500";
+        }
+
+        function generateQuestion() {
+            isProcessing = false;
+            
+            // 1. Random Correct (Prevent duplicate previous)
+            let correct;
+            let attempts = 0;
+            do {
+                const idx = Math.floor(Math.random() * activeData.length);
+                correct = activeData[idx];
+                attempts++;
+            } while (correct.char === lastChar && activeData.length > 1 && attempts < 10);
+            
+            lastChar = correct.char;
+            currentQuestion = correct;
+
+            // 2. Random Distractors
+            let distractors = [];
+            while (distractors.length < 3) {
+                const d = activeData[Math.floor(Math.random() * activeData.length)];
+                if (d.char !== correct.char && !distractors.includes(d)) {
+                    distractors.push(d);
+                }
+            }
+
+            // 3. Shuffle
+            const allOptions = [...distractors, correct];
+            for (let i = allOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
+            }
+
+            renderQuestion(allOptions);
+        }
+
+        function renderQuestion(options) {
+            // Reset UI States
+            cardContainer.className = "relative w-full bg-white rounded-3xl shadow-xl p-8 mb-6 flex flex-col items-center justify-center min-h-[280px] transition-all duration-200 border-2 border-transparent animate-pop";
+            
+            questionChar.innerText = currentQuestion.char;
+            questionChar.className = "text-9xl font-black mb-4 text-slate-800 transition-all duration-200";
+            if (currentMode === 'katakana') questionChar.classList.add('text-slate-800');
+            
+            feedbackText.innerText = "";
+            sparkleIcon.classList.add('hidden');
+
+            optionsGrid.innerHTML = "";
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = getButtonClass('default');
+                btn.innerText = opt.thai;
+                btn.onclick = () => handleAnswer(opt, btn);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function getButtonClass(state) {
+            const base = "h-20 rounded-xl text-xl font-bold transition-all duration-100 flex items-center justify-center relative shadow-sm border-2 ";
+            
+            // Theme dependent borders
+            let themeBorder = "border-rose-100 hover:bg-rose-50 active:scale-95 text-slate-700";
+            if (currentMode === 'katakana') themeBorder = "border-blue-100 hover:bg-blue-50 active:scale-95 text-slate-700";
+            if (currentMode === 'mixed') themeBorder = "border-orange-100 hover:bg-orange-50 active:scale-95 text-slate-700";
+
+            if (state === 'default') return base + "bg-white " + themeBorder;
+            if (state === 'correct') return base + "bg-green-100 border-green-500 text-green-700 scale-105 shadow-md z-10";
+            if (state === 'wrong') return base + "bg-red-100 border-red-500 text-red-700 opacity-60 cursor-not-allowed"; // Wrong style
+            if (state === 'disabled') return base + "bg-gray-50 border-transparent text-gray-300 cursor-not-allowed";
+        }
+
+        function handleAnswer(selected, btnElement) {
+            if (isProcessing) return; // Block input if already moving to next question
+            if (btnElement.disabled) return; // Block input if this button is already wrong
+
+            const isCorrect = selected.char === currentQuestion.char;
+
+            if (isCorrect) {
+                // --- CORRECT ---
+                isProcessing = true;
+                score++;
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem(`quiz_highscore_${currentMode}`, highScore);
+                }
+                updateScoreUI();
+
+                // UI Updates
+                btnElement.className = getButtonClass('correct');
+                cardContainer.classList.add('border-green-400');
+                questionChar.classList.add('text-green-500', 'scale-110');
+                
+                feedbackText.innerText = `ถูกต้อง! (${currentQuestion.romaji})`;
+                feedbackText.className = "font-bold text-lg text-green-600 animate-bounce-in";
+                sparkleIcon.classList.remove('hidden');
+
+                // Disable all buttons to prevent clicking others during transition
+                const buttons = optionsGrid.querySelectorAll('button');
+                buttons.forEach(b => {
+                    if (b !== btnElement) b.disabled = true;
+                });
+
+                // Next Question
+                setTimeout(generateQuestion, 1000);
+
+            } else {
+                // --- WRONG ---
+                // 1. Reset Score
+                score = 0;
+                updateScoreUI();
+
+                // 2. Button Visuals (Mark as wrong and disable)
+                btnElement.className = getButtonClass('wrong');
+                btnElement.disabled = true;
+
+                // 3. Global Visuals
+                cardContainer.classList.add('animate-shake');
+                questionChar.classList.add('text-red-500');
+
+                // Remove red text/shake after a short while (so they can try again)
+                setTimeout(() => {
+                     cardContainer.classList.remove('animate-shake');
+                     questionChar.classList.remove('text-red-500');
+                }, 500);
+
+                feedbackText.innerText = "ผิดครับ ลองใหม่อีกครั้ง!";
+                feedbackText.className = "font-bold text-lg text-red-500";
+            }
+        }
+
+        function updateScoreUI() {
+            scoreDisplay.innerText = score;
+            highscoreDisplay.innerText = highScore;
+        }
+
+        function resetScore() {
+            score = 0;
+            updateScoreUI();
+            generateQuestion();
+        }
+
+    </script>
+</body>
+</html>
+
+

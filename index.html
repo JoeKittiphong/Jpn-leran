@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ฝึกภาษาญี่ปุ่น: Hiragana & Katakana</title>
+    <title>ฝึกภาษาญี่ปุ่น: ครบวงจร</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -47,9 +47,9 @@
 <body class="bg-rose-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-500" id="main-body">
 
     <!-- ================= MENU SCREEN ================= -->
-    <div id="menu-screen" class="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto animate-pop">
+    <div id="menu-screen" class="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto animate-pop pb-12">
         
-        <div class="text-center mb-8">
+        <div class="text-center mb-6">
             <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-lg mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             </div>
@@ -57,29 +57,53 @@
             <p class="text-slate-500 text-sm">เลือกโหมดที่ต้องการฝึก</p>
         </div>
 
-        <div class="w-full space-y-4">
-            <button onclick="startGame('hiragana')" class="w-full relative bg-white active:bg-rose-50 p-5 rounded-2xl shadow-sm border-2 border-rose-100 active:border-rose-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
+        <div class="w-full space-y-3">
+            <!-- Hiragana Btn -->
+            <button onclick="startGame('hiragana')" class="w-full relative bg-white active:bg-rose-50 p-4 rounded-2xl shadow-sm border-2 border-rose-100 active:border-rose-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
-                    <span class="block text-xl font-bold text-rose-600">Hiragana</span>
+                    <span class="block text-lg font-bold text-rose-600">Hiragana</span>
                     <span class="text-xs text-slate-400">อักษรพื้นฐาน (あ-ん)</span>
                 </div>
-                <span class="text-4xl text-rose-100 font-bold">あ</span>
+                <span class="text-3xl text-rose-100 font-bold">あ</span>
             </button>
 
-            <button onclick="startGame('katakana')" class="w-full relative bg-white active:bg-blue-50 p-5 rounded-2xl shadow-sm border-2 border-blue-100 active:border-blue-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
+            <!-- Katakana Btn -->
+            <button onclick="startGame('katakana')" class="w-full relative bg-white active:bg-blue-50 p-4 rounded-2xl shadow-sm border-2 border-blue-100 active:border-blue-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
-                    <span class="block text-xl font-bold text-blue-600">Katakana</span>
+                    <span class="block text-lg font-bold text-blue-600">Katakana</span>
                     <span class="text-xs text-slate-400">คำทับศัพท์ (ア-ン)</span>
                 </div>
-                <span class="text-4xl text-blue-100 font-bold">ア</span>
+                <span class="text-3xl text-blue-100 font-bold">ア</span>
+            </button>
+            
+            <!-- Reading Practice Btn (NEW) -->
+            <button onclick="startGame('reading')" class="w-full relative bg-white active:bg-violet-50 p-4 rounded-2xl shadow-sm border-2 border-violet-100 active:border-violet-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
+                <div>
+                    <span class="block text-lg font-bold text-violet-600">ฝึกอ่าน (สำหรับมือใหม่)</span>
+                    <span class="text-xs text-slate-400">ศัพท์ + แปลไทย ➔ เลือกคำอ่าน</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="text-2xl text-violet-200 font-bold leading-none">よ</span>
+                    <span class="text-xs text-violet-300 font-bold">อ่าน</span>
+                </div>
             </button>
 
-            <button onclick="startGame('mixed')" class="w-full relative bg-gradient-to-r from-rose-500 to-orange-400 active:opacity-90 p-5 rounded-2xl shadow-lg shadow-rose-200 transition-all text-left flex items-center justify-between text-white active:scale-[0.98]">
+            <!-- N5 Vocab Btn -->
+            <button onclick="startGame('n5')" class="w-full relative bg-white active:bg-emerald-50 p-4 rounded-2xl shadow-sm border-2 border-emerald-100 active:border-emerald-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
-                    <span class="block text-xl font-bold">รวมมิตร (Mixed)</span>
-                    <span class="text-xs opacity-90">ท้าทายความจำทั้งสองแบบ</span>
+                    <span class="block text-lg font-bold text-emerald-600">จำศัพท์ N5</span>
+                    <span class="text-xs text-slate-400">ศัพท์ ➔ เลือกความหมาย</span>
                 </div>
-                <div class="flex gap-1 text-2xl font-black opacity-30">
+                <span class="text-3xl text-emerald-100 font-bold">語</span>
+            </button>
+
+            <!-- Mixed Btn -->
+            <button onclick="startGame('mixed')" class="w-full relative bg-gradient-to-r from-rose-500 to-orange-400 active:opacity-90 p-4 rounded-2xl shadow-lg shadow-rose-200 transition-all text-left flex items-center justify-between text-white active:scale-[0.98]">
+                <div>
+                    <span class="block text-lg font-bold">รวมตัวอักษร (Mixed)</span>
+                    <span class="text-xs opacity-90">ท้าทายทั้งสองแบบ</span>
+                </div>
+                <div class="flex gap-1 text-xl font-black opacity-30">
                     <span>あ</span><span>ア</span>
                 </div>
             </button>
@@ -118,19 +142,25 @@
         </div>
 
         <!-- Question Card -->
-        <div id="card-container" class="relative w-full bg-white rounded-3xl shadow-xl p-8 mb-6 flex flex-col items-center justify-center min-h-[280px] transition-all duration-200 border-2 border-transparent">
+        <div id="card-container" class="relative w-full bg-white rounded-3xl shadow-xl p-8 mb-4 flex flex-col items-center justify-center min-h-[260px] transition-all duration-200 border-2 border-transparent">
             
             <div id="sparkle-icon" class="hidden absolute top-4 right-4 text-green-500 animate-bounce-in">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 3v4"/><path d="M3 5h4"/><path d="M3 9h4"/></svg>
             </div>
 
             <div class="mb-4">
-                <span class="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full">นี่คือตัวอะไร?</span>
+                <span id="question-label" class="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full">นี่คือตัวอะไร?</span>
             </div>
             
-            <h1 id="question-char" class="text-9xl font-black mb-4 text-slate-800 transition-all duration-200">
+            <!-- Question Text -->
+            <h1 id="question-char" class="text-center font-black mb-1 text-slate-800 transition-all duration-200 break-words w-full">
                 ?
             </h1>
+            
+            <!-- Secondary Text (Meaning) - Visible mainly in Reading Mode -->
+            <p id="question-sub" class="hidden text-slate-500 text-lg font-medium mb-4">
+                (ความหมาย)
+            </p>
 
             <div class="h-6 w-full text-center">
                 <p id="feedback-text" class="font-bold text-lg"></p>
@@ -189,6 +219,205 @@
             { char: 'パ', romaji: 'pa', thai: 'พะ' }, { char: 'ピ', romaji: 'pi', thai: 'พิ' }, { char: 'プ', romaji: 'pu', thai: 'พุ' }, { char: 'ペ', romaji: 'pe', thai: 'เพะ' }, { char: 'ポ', romaji: 'po', thai: 'โพะ' },
         ];
 
+        // --- N5 VOCABULARY (~200 Items with Reading) ---
+        const n5VocabData = [
+            // Pronouns & People
+            { char: 'わたし', reading: 'วา-ตา-ชิ', thai: 'ฉัน/ผม' },
+            { char: 'あなた', reading: 'อะ-นา-ตะ', thai: 'คุณ' },
+            { char: 'ひと', reading: 'ฮิ-โตะ', thai: 'คน' },
+            { char: 'こども', reading: 'โค-โด-โมะ', thai: 'เด็ก' },
+            { char: 'おとこ', reading: 'โอ-โต-โกะ', thai: 'ผู้ชาย' },
+            { char: 'おんな', reading: 'ออน-นะ', thai: 'ผู้หญิง' },
+            { char: 'せんせい', reading: 'เซ็น-เซ', thai: 'ครู/อาจารย์' },
+            { char: 'がくせい', reading: 'กะ-คุ-เซ', thai: 'นักเรียน' },
+            { char: 'ともだち', reading: 'โท-โม-ดา-จิ', thai: 'เพื่อน' },
+            { char: 'いしゃ', reading: 'อิ-ชะ', thai: 'หมอ' },
+            { char: 'おとな', reading: 'โอ-โต-นะ', thai: 'ผู้ใหญ่' },
+            { char: 'がいこくじん', reading: 'ไก-โค-คุ-จิน', thai: 'ชาวต่างชาติ' },
+            
+            // Family
+            { char: 'かぞく', reading: 'คา-โซ-คุ', thai: 'ครอบครัว' },
+            { char: 'ちち', reading: 'ชิ-ชิ', thai: 'พ่อ (ของฉัน)' },
+            { char: 'はは', reading: 'ฮะ-ฮะ', thai: 'แม่ (ของฉัน)' },
+            { char: 'あに', reading: 'อะ-นิ', thai: 'พี่ชาย (ของฉัน)' },
+            { char: 'あね', reading: 'อะ-เนะ', thai: 'พี่สาว (ของฉัน)' },
+            { char: 'おとうと', reading: 'โอ-โท-โตะ', thai: 'น้องชาย' },
+            { char: 'いもうと', reading: 'อิ-โม-โตะ', thai: 'น้องสาว' },
+            { char: 'おとうさん', reading: 'โอ-โต-ซัง', thai: 'คุณพ่อ' },
+            { char: 'おかあさん', reading: 'โอ-คา-ซัง', thai: 'คุณแม่' },
+            { char: 'おじいさん', reading: 'โอ-จี-ซัง', thai: 'คุณปู่/ตา' },
+            { char: 'おばあさん', reading: 'โอ-บา-ซัง', thai: 'คุณย่า/ยาย' },
+
+            // Time & Days
+            { char: 'いま', reading: 'อิ-มะ', thai: 'ตอนนี้' },
+            { char: 'きょう', reading: 'เคียว', thai: 'วันนี้' },
+            { char: 'きのう', reading: 'คิ-โน', thai: 'เมื่อวาน' },
+            { char: 'あした', reading: 'อะ-ชิ-ตะ', thai: 'พรุ่งนี้' },
+            { char: 'あさ', reading: 'อะ-ซะ', thai: 'ตอนเช้า' },
+            { char: 'ひる', reading: 'ฮิ-รุ', thai: 'ตอนกลางวัน' },
+            { char: 'ばん', reading: 'บัง', thai: 'ตอนเย็น' },
+            { char: 'よる', reading: 'โย-รุ', thai: 'ตอนกลางคืน' },
+            { char: 'まいにち', reading: 'ไม-นิ-ชิ', thai: 'ทุกวัน' },
+            { char: 'じかん', reading: 'จิ-คัง', thai: 'เวลา' },
+            { char: 'げつようび', reading: 'เก็ท-สึ-โย-บิ', thai: 'วันจันทร์' },
+            { char: 'かようび', reading: 'คะ-โย-บิ', thai: 'วันอังคาร' },
+            { char: 'すいようび', reading: 'ซุ-อิ-โย-บิ', thai: 'วันพุธ' },
+            { char: 'もくようび', reading: 'โม-คุ-โย-บิ', thai: 'วันพฤหัสบดี' },
+            { char: 'きんようび', reading: 'คิน-โย-บิ', thai: 'วันศุกร์' },
+            { char: 'どようび', reading: 'โด-โย-บิ', thai: 'วันเสาร์' },
+            { char: 'にちようび', reading: 'นิ-ชิ-โย-บิ', thai: 'วันอาทิตย์' },
+            { char: 'せんしゅう', reading: 'เซ็น-ชู', thai: 'สัปดาห์ที่แล้ว' },
+            { char: 'こんしゅう', reading: 'คน-ชู', thai: 'สัปดาห์นี้' },
+            { char: 'らいしゅう', reading: 'ไร-ชู', thai: 'สัปดาห์หน้า' },
+
+            // Greetings & Expressions
+            { char: 'おはよう', reading: 'โอ-ฮา-โย', thai: 'สวัสดีตอนเช้า' },
+            { char: 'こんにちは', reading: 'คน-นิ-ชิ-วะ', thai: 'สวัสดี' },
+            { char: 'こんばんは', reading: 'คม-บัง-วะ', thai: 'สวัสดีตอนเย็น' },
+            { char: 'さようなら', reading: 'ซา-โย-นา-ระ', thai: 'ลาก่อน' },
+            { char: 'ありがとう', reading: 'อะ-ริ-กา-โตะ', thai: 'ขอบคุณ' },
+            { char: 'すみません', reading: 'ซุ-มิ-มา-เซ็น', thai: 'ขอโทษ' },
+            { char: 'はい', reading: 'ไฮ', thai: 'ใช่/ครับ/ค่ะ' },
+            { char: 'いいえ', reading: 'อี-เอะ', thai: 'ไม่/เปล่า' },
+            { char: 'はじめまして', reading: 'ฮา-จิ-เม-มา-ชิ-เตะ', thai: 'ยินดีที่ได้รู้จัก' },
+
+            // Places
+            { char: 'がっこう', reading: 'กัค-โค', thai: 'โรงเรียน' },
+            { char: 'いえ', reading: 'อิ-เอะ', thai: 'บ้าน' },
+            { char: 'へや', reading: 'เฮ-ยะ', thai: 'ห้อง' },
+            { char: 'トイレ', reading: 'โท-อิ-เระ', thai: 'ห้องน้ำ' },
+            { char: 'だいどころ', reading: 'ได-โด-โค-โระ', thai: 'ห้องครัว' },
+            { char: 'かいしゃ', reading: 'ไค-ฉะ', thai: 'บริษัท' },
+            { char: 'びょういん', reading: 'เบียว-อิน', thai: 'โรงพยาบาล' },
+            { char: 'ぎんこう', reading: 'กิน-โค', thai: 'ธนาคาร' },
+            { char: 'ゆうびんきょく', reading: 'ยู-บิน-เคียว-คุ', thai: 'ที่ทำการไปรษณีย์' },
+            { char: 'えき', reading: 'เอะ-กิ', thai: 'สถานีรถไฟ' },
+            { char: 'みせ', reading: 'มิ-เสะ', thai: 'ร้านค้า' },
+            { char: 'デパート', reading: 'เด-ปา-โตะ', thai: 'ห้างสรรพสินค้า' },
+            { char: 'レストラン', reading: 'เร-สุ-โต-รัน', thai: 'ร้านอาหาร' },
+            { char: 'こうえん', reading: 'โค-เอ็น', thai: 'สวนสาธารณะ' },
+            { char: 'くに', reading: 'คุ-นิ', thai: 'ประเทศ' },
+
+            // Things
+            { char: 'ほん', reading: 'ฮน', thai: 'หนังสือ' },
+            { char: 'じしょ', reading: 'จิ-โชะ', thai: 'พจนานุกรม' },
+            { char: 'えんぴつ', reading: 'เอ็น-ปิ-สึ', thai: 'ดินสอ' },
+            { char: 'かばん', reading: 'คะ-บัง', thai: 'กระเป๋า' },
+            { char: 'とけい', reading: 'โท-เก', thai: 'นาฬิกา' },
+            { char: 'かさ', reading: 'คะ-ซะ', thai: 'ร่ม' },
+            { char: 'おかね', reading: 'โอ-คา-เนะ', thai: 'เงิน' },
+            { char: 'くつ', reading: 'คุ-สึ', thai: 'รองเท้า' },
+            { char: 'しんぶん', reading: 'ชิม-บุน', thai: 'หนังสือพิมพ์' },
+            { char: 'つくえ', reading: 'สึ-คุ-เอะ', thai: 'โต๊ะ' },
+            { char: 'いす', reading: 'อิ-สึ', thai: 'เก้าอี้' },
+            { char: 'でんわ', reading: 'เด็น-วะ', thai: 'โทรศัพท์' },
+            { char: 'じてんしゃ', reading: 'จิ-เต็น-ฉะ', thai: 'จักรยาน' },
+            { char: 'くるま', reading: 'คุ-รุ-มะ', thai: 'รถยนต์' },
+            { char: 'でんしゃ', reading: 'เด็น-ฉะ', thai: 'รถไฟฟ้า' },
+            { char: 'バス', reading: 'บะ-สึ', thai: 'รถเมล์' },
+            { char: 'ひこうき', reading: 'ฮิ-โค-กิ', thai: 'เครื่องบิน' },
+            { char: 'てがみ', reading: 'เท-กะ-มิ', thai: 'จดหมาย' },
+            { char: 'しゃしん', reading: 'ชา-ชิน', thai: 'รูปถ่าย' },
+            { char: 'きっぷ', reading: 'คิป-ปุ', thai: 'ตั๋ว' },
+
+            // Food & Drink
+            { char: 'ごはん', reading: 'โก-ฮัง', thai: 'ข้าว/อาหาร' },
+            { char: 'パン', reading: 'ปัง', thai: 'ขนมปัง' },
+            { char: 'にく', reading: 'นิ-คุ', thai: 'เนื้อ' },
+            { char: 'さかな', reading: 'ซะ-กะ-นะ', thai: 'ปลา' },
+            { char: 'やさい', reading: 'ยะ-ไซ', thai: 'ผัก' },
+            { char: 'くだもの', reading: 'คุ-ดา-โม-โนะ', thai: 'ผลไม้' },
+            { char: 'たまご', reading: 'ทะ-มะ-โกะ', thai: 'ไข่' },
+            { char: 'みず', reading: 'มิ-ซุ', thai: 'น้ำ' },
+            { char: 'おちゃ', reading: 'โอ-ชะ', thai: 'ชา' },
+            { char: 'ぎゅうにゅう', reading: 'กิว-นิว', thai: 'นมวัว' },
+            { char: 'コーヒー', reading: 'โค-ฮี', thai: 'กาแฟ' },
+            { char: 'おさけ', reading: 'โอ-ซะ-เกะ', thai: 'เหล้า' },
+            { char: 'りょうり', reading: 'เรียว-ริ', thai: 'อาหาร/การทำอาหาร' },
+
+            // Adjectives
+            { char: 'おおきい', reading: 'โอ-คี', thai: 'ใหญ่' },
+            { char: 'ちいさい', reading: 'ชี-ไซ', thai: 'เล็ก' },
+            { char: 'あたらしい', reading: 'อะ-ตะ-รา-ชี', thai: 'ใหม่' },
+            { char: 'ふるい', reading: 'ฟุ-รุ-อิ', thai: 'เก่า' },
+            { char: 'いい', reading: 'อี', thai: 'ดี' },
+            { char: 'わるい', reading: 'วะ-รุ-อิ', thai: 'เลว/ไม่ดี' },
+            { char: 'あつい', reading: 'อะ-สึ-อิ', thai: 'ร้อน' },
+            { char: 'さむい', reading: 'ซะ-มุ-อิ', thai: 'หนาว' },
+            { char: 'つめたい', reading: 'สึ-เม-ไท', thai: 'เย็น (สัมผัส)' },
+            { char: 'むずかしい', reading: 'มุ-ซุ-กะ-ชี', thai: 'ยาก' },
+            { char: 'やさしい', reading: 'ยะ-ซะ-ชี', thai: 'ง่าย/ใจดี' },
+            { char: 'たかい', reading: 'ทะ-ไค', thai: 'แพง/สูง' },
+            { char: 'やすい', reading: 'ยะ-สุ-อิ', thai: 'ราคาถูก' },
+            { char: 'おいしい', reading: 'โอ-อิ-ชี', thai: 'อร่อย' },
+            { char: 'たのしい', reading: 'ทะ-โน-ชี', thai: 'สนุก' },
+            { char: 'おもしろい', reading: 'โอ-โม-ชิ-โร-อิ', thai: 'น่าสนใจ' },
+            { char: 'いそがしい', reading: 'อิ-โซ-กะ-ชี', thai: 'ยุ่ง' },
+            { char: 'しろい', reading: 'ชิ-โร-อิ', thai: 'สีขาว' },
+            { char: 'くろい', reading: 'คุ-โร-อิ', thai: 'สีดำ' },
+            { char: 'あかい', reading: 'อะ-ไค', thai: 'สีแดง' },
+            { char: 'あおい', reading: 'อะ-โอ-อิ', thai: 'สีน้ำเงิน' },
+            { char: 'すき', reading: 'สุ-กิ', thai: 'ชอบ' },
+            { char: 'きらい', reading: 'คิ-ไร', thai: 'เกลียด' },
+            { char: 'きれい', reading: 'คิ-เร', thai: 'สวย/สะอาด' },
+            { char: 'ゆうめい', reading: 'ยู-เม', thai: 'มีชื่อเสียง' },
+            { char: 'しずか', reading: 'ชิ-ซุ-กะ', thai: 'เงียบ' },
+            { char: 'げんき', reading: 'เก็ง-กิ', thai: 'สบายดี' },
+            { char: 'ひま', reading: 'ฮิ-มะ', thai: 'ว่าง' },
+            { char: 'たいせつ', reading: 'ไท-เซ็ต-สึ', thai: 'สำคัญ' },
+            { char: 'じょうず', reading: 'โจ-ซุ', thai: 'เก่ง' },
+            { char: 'へた', reading: 'เฮ-ตะ', thai: 'ไม่เก่ง' },
+
+            // Verbs
+            { char: 'たべます', reading: 'ทะ-เบ-มา-สึ', thai: 'กิน' },
+            { char: 'のみます', reading: 'โน-มิ-มา-สึ', thai: 'ดื่ม' },
+            { char: 'かいます', reading: 'ไค-มา-สึ', thai: 'ซื้อ' },
+            { char: 'みます', reading: 'มิ-มา-สึ', thai: 'ดู' },
+            { char: 'ききます', reading: 'คิ-กิ-มา-สึ', thai: 'ฟัง/ถาม' },
+            { char: 'よみます', reading: 'โย-มิ-มา-สึ', thai: 'อ่าน' },
+            { char: 'かきます', reading: 'คะ-กิ-มา-สึ', thai: 'เขียน' },
+            { char: 'いきます', reading: 'อิ-กิ-มา-สึ', thai: 'ไป' },
+            { char: 'きます', reading: 'คิ-มา-สึ', thai: 'มา' },
+            { char: 'かえります', reading: 'คา-เอ-ริ-มา-สึ', thai: 'กลับ' },
+            { char: 'あいます', reading: 'ไอ-มา-สึ', thai: 'พบ/เจอ' },
+            { char: 'はなします', reading: 'ฮา-นา-ชิ-มา-สึ', thai: 'พูดคุย' },
+            { char: 'べんきょうします', reading: 'เบ็น-เคียว-ชิ-มา-สึ', thai: 'เรียน' },
+            { char: 'あそびます', reading: 'อะ-โซ-บิ-มา-สึ', thai: 'เที่ยวเล่น' },
+            { char: 'およぎます', reading: 'โอ-โย-กิ-มา-สึ', thai: 'ว่ายน้ำ' },
+            { char: 'まちます', reading: 'มา-ชิ-มา-สึ', thai: 'รอ' },
+            { char: 'わかります', reading: 'วา-กา-ริ-มา-สึ', thai: 'เข้าใจ' },
+            { char: 'あります', reading: 'อะ-ริ-มา-สึ', thai: 'มี (สิ่งของ)' },
+            { char: 'います', reading: 'อิ-มา-สึ', thai: 'มี/อยู่ (คน/สัตว์)' },
+            { char: 'ねます', reading: 'เน-มา-สึ', thai: 'นอน' },
+            { char: 'おきます', reading: 'โอ-กิ-มา-สึ', thai: 'ตื่น' },
+            { char: 'あげます', reading: 'อะ-เก-มา-สึ', thai: 'ให้' },
+            { char: 'もらいます', reading: 'โม-ไร-มา-สึ', thai: 'ได้รับ' },
+            { char: 'かし', reading: 'คะ-ชิ', thai: 'ให้ยืม' },
+            { char: 'かります', reading: 'คะ-ริ-มา-สึ', thai: 'ขอยืม' },
+            { char: 'おしえます', reading: 'โอ-ชิ-เอ-มา-สึ', thai: 'สอน' },
+            { char: 'ならいます', reading: 'นา-ไร-มา-สึ', thai: 'เรียนรู้' },
+            { char: 'かけます', reading: 'คะ-เก-มา-สึ', thai: 'โทรศัพท์' },
+            { char: 'はたらきます', reading: 'ฮา-ตะ-รา-กิ-มา-สึ', thai: 'ทำงาน' },
+            { char: 'はじまります', reading: 'ฮา-จิ-มา-ริ-มา-สึ', thai: 'เริ่ม' },
+            { char: 'おわります', reading: 'โอ-วะ-ริ-มา-สึ', thai: 'จบ/เสร็จ' },
+
+            // Misc
+            { char: 'なまえ', reading: 'นา-มา-เอะ', thai: 'ชื่อ' },
+            { char: 'なん / なに', reading: 'นั่น/นะ-นิ', thai: 'อะไร' },
+            { char: 'だれ', reading: 'ดา-เระ', thai: 'ใคร' },
+            { char: 'どこ', reading: 'โด-โกะ', thai: 'ที่ไหน' },
+            { char: 'いつ', reading: 'อิ-สึ', thai: 'เมื่อไหร่' },
+            { char: 'どうして', reading: 'โด-ชิ-เตะ', thai: 'ทำไม' },
+            { char: 'どう', reading: 'โด', thai: 'อย่างไร' },
+            { char: 'どの', reading: 'โด-โนะ', thai: 'อันไหน/คนไหน' },
+            { char: 'これ', reading: 'โค-เระ', thai: 'อันนี้' },
+            { char: 'それ', reading: 'โซ-เระ', thai: 'อันนั้น' },
+            { char: 'あれ', reading: 'อะ-เระ', thai: 'อันโน้น' },
+            { char: 'ここ', reading: 'โค-โกะ', thai: 'ที่นี่' },
+            { char: 'そこ', reading: 'โซ-โกะ', thai: 'ที่นั่น' },
+            { char: 'あそこ', reading: 'อะ-โซ-โกะ', thai: 'ที่โน่น' },
+        ];
+
         // --- STATE VARIABLES ---
         let currentMode = null;
         let activeData = [];
@@ -204,6 +433,8 @@
         const mainBody = document.getElementById('main-body');
         
         const questionChar = document.getElementById('question-char');
+        const questionLabel = document.getElementById('question-label');
+        const questionSub = document.getElementById('question-sub');
         const feedbackText = document.getElementById('feedback-text');
         const optionsGrid = document.getElementById('options-grid');
         const scoreDisplay = document.getElementById('score-display');
@@ -223,6 +454,7 @@
             if (mode === 'hiragana') activeData = hiraganaData;
             else if (mode === 'katakana') activeData = katakanaData;
             else if (mode === 'mixed') activeData = [...hiraganaData, ...katakanaData];
+            else if (mode === 'n5' || mode === 'reading') activeData = n5VocabData;
 
             // Theme Styling
             updateTheme(mode);
@@ -247,23 +479,36 @@
         }
 
         function updateTheme(mode) {
-            mainBody.className = "min-h-screen flex flex-col transition-colors duration-500"; // Reset base
-            
+            mainBody.className = "min-h-screen flex flex-col transition-colors duration-500"; 
+            scoreDisplay.className = "text-2xl font-bold transition-all";
+            questionSub.classList.add('hidden'); // Hide sub-text by default
+
             if (mode === 'katakana') {
                 mainBody.classList.add('bg-blue-50', 'text-slate-800');
                 modeBadge.innerText = "KATAKANA";
-                scoreDisplay.classList.remove('text-rose-600');
                 scoreDisplay.classList.add('text-blue-600');
+                questionLabel.innerText = "นี่คือตัวอะไร?";
             } else if (mode === 'mixed') {
                 mainBody.classList.add('bg-orange-50', 'text-slate-800');
                 modeBadge.innerText = "MIXED MODE";
-                scoreDisplay.classList.remove('text-rose-600');
                 scoreDisplay.classList.add('text-orange-600');
+                questionLabel.innerText = "นี่คือตัวอะไร?";
+            } else if (mode === 'n5') {
+                mainBody.classList.add('bg-emerald-50', 'text-slate-800');
+                modeBadge.innerText = "N5 VOCAB";
+                scoreDisplay.classList.add('text-emerald-600');
+                questionLabel.innerText = "แปลว่าอะไร?";
+            } else if (mode === 'reading') {
+                mainBody.classList.add('bg-violet-50', 'text-slate-800');
+                modeBadge.innerText = "READING";
+                scoreDisplay.classList.add('text-violet-600');
+                questionLabel.innerText = "อ่านว่าอะไร?";
+                questionSub.classList.remove('hidden'); // Show sub-text for reading mode
             } else {
                 mainBody.classList.add('bg-rose-50', 'text-slate-800');
                 modeBadge.innerText = "HIRAGANA";
-                scoreDisplay.classList.remove('text-blue-600', 'text-orange-600');
                 scoreDisplay.classList.add('text-rose-600');
+                questionLabel.innerText = "นี่คือตัวอะไร?";
             }
         }
 
@@ -274,7 +519,7 @@
         function generateQuestion() {
             isProcessing = false;
             
-            // 1. Random Correct (Prevent duplicate previous)
+            // 1. Random Correct
             let correct;
             let attempts = 0;
             do {
@@ -290,7 +535,23 @@
             let distractors = [];
             while (distractors.length < 3) {
                 const d = activeData[Math.floor(Math.random() * activeData.length)];
-                if (d.char !== correct.char && !distractors.includes(d)) {
+                
+                let isDupe = false;
+                if (d.char === correct.char) isDupe = true;
+                
+                // Logic for distinct options based on mode
+                if (currentMode === 'n5') {
+                    // In N5 vocab mode, answers are meanings. Avoid same meaning.
+                    if (distractors.some(dist => dist.thai === d.thai)) isDupe = true;
+                } else if (currentMode === 'reading') {
+                    // In Reading mode, answers are readings. Avoid same reading.
+                    if (distractors.some(dist => dist.reading === d.reading)) isDupe = true;
+                } else {
+                    // Char modes
+                    if (distractors.some(dist => dist.thai === d.thai)) isDupe = true;
+                }
+                
+                if (!isDupe) {
                     distractors.push(d);
                 }
             }
@@ -307,10 +568,28 @@
 
         function renderQuestion(options) {
             // Reset UI States
-            cardContainer.className = "relative w-full bg-white rounded-3xl shadow-xl p-8 mb-6 flex flex-col items-center justify-center min-h-[280px] transition-all duration-200 border-2 border-transparent animate-pop";
+            cardContainer.className = "relative w-full bg-white rounded-3xl shadow-xl p-8 mb-4 flex flex-col items-center justify-center min-h-[260px] transition-all duration-200 border-2 border-transparent animate-pop";
             
             questionChar.innerText = currentQuestion.char;
-            questionChar.className = "text-9xl font-black mb-4 text-slate-800 transition-all duration-200";
+            
+            // Sub text for Reading Mode
+            if (currentMode === 'reading') {
+                questionSub.innerText = `(${currentQuestion.thai})`;
+            }
+
+            // Font Scaling
+            questionChar.className = "text-center font-black mb-2 text-slate-800 transition-all duration-200 break-words w-full";
+            const len = currentQuestion.char.length;
+            if (len <= 2) {
+                questionChar.classList.add('text-9xl');
+            } else if (len <= 4) {
+                questionChar.classList.add('text-7xl');
+            } else if (len <= 6) {
+                questionChar.classList.add('text-6xl');
+            } else {
+                questionChar.classList.add('text-5xl');
+            }
+
             if (currentMode === 'katakana') questionChar.classList.add('text-slate-800');
             
             feedbackText.innerText = "";
@@ -321,29 +600,43 @@
             options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = getButtonClass('default');
-                btn.innerText = opt.thai;
+                
+                // --- Determine what to show on buttons ---
+                if (currentMode === 'reading') {
+                    // Show Pronunciation (Reading)
+                    btn.innerText = opt.reading;
+                } else if (currentMode === 'n5') {
+                    // Show Meaning
+                    btn.innerText = opt.thai; 
+                } else {
+                    // Hiragana/Katakana/Mixed
+                    btn.innerText = opt.thai;
+                }
+
                 btn.onclick = () => handleAnswer(opt, btn);
                 optionsGrid.appendChild(btn);
             });
         }
 
         function getButtonClass(state) {
-            const base = "h-20 rounded-xl text-xl font-bold transition-all duration-100 flex items-center justify-center relative shadow-sm border-2 ";
+            const base = "h-16 md:h-20 rounded-xl text-lg md:text-xl font-bold transition-all duration-100 flex items-center justify-center relative shadow-sm border-2 px-2 ";
             
             // Theme dependent borders
             let themeBorder = "border-rose-100 hover:bg-rose-50 active:scale-95 text-slate-700";
             if (currentMode === 'katakana') themeBorder = "border-blue-100 hover:bg-blue-50 active:scale-95 text-slate-700";
             if (currentMode === 'mixed') themeBorder = "border-orange-100 hover:bg-orange-50 active:scale-95 text-slate-700";
+            if (currentMode === 'n5') themeBorder = "border-emerald-100 hover:bg-emerald-50 active:scale-95 text-slate-700";
+            if (currentMode === 'reading') themeBorder = "border-violet-100 hover:bg-violet-50 active:scale-95 text-slate-700";
 
             if (state === 'default') return base + "bg-white " + themeBorder;
             if (state === 'correct') return base + "bg-green-100 border-green-500 text-green-700 scale-105 shadow-md z-10";
-            if (state === 'wrong') return base + "bg-red-100 border-red-500 text-red-700 opacity-60 cursor-not-allowed"; // Wrong style
+            if (state === 'wrong') return base + "bg-red-100 border-red-500 text-red-700 opacity-60 cursor-not-allowed"; 
             if (state === 'disabled') return base + "bg-gray-50 border-transparent text-gray-300 cursor-not-allowed";
         }
 
         function handleAnswer(selected, btnElement) {
-            if (isProcessing) return; // Block input if already moving to next question
-            if (btnElement.disabled) return; // Block input if this button is already wrong
+            if (isProcessing) return; 
+            if (btnElement.disabled) return;
 
             const isCorrect = selected.char === currentQuestion.char;
 
@@ -362,11 +655,17 @@
                 cardContainer.classList.add('border-green-400');
                 questionChar.classList.add('text-green-500', 'scale-110');
                 
-                feedbackText.innerText = `ถูกต้อง! (${currentQuestion.romaji})`;
+                // Show Romaji or Reading depending on mode, but for N5 vocab usually Romaji/Reading is good feedback
+                if (currentMode === 'reading' || currentMode === 'n5') {
+                     feedbackText.innerText = `ถูกต้อง! (${currentQuestion.reading})`;
+                } else {
+                     feedbackText.innerText = `ถูกต้อง! (${currentQuestion.romaji})`;
+                }
+               
                 feedbackText.className = "font-bold text-lg text-green-600 animate-bounce-in";
                 sparkleIcon.classList.remove('hidden');
 
-                // Disable all buttons to prevent clicking others during transition
+                // Disable all buttons
                 const buttons = optionsGrid.querySelectorAll('button');
                 buttons.forEach(b => {
                     if (b !== btnElement) b.disabled = true;
@@ -377,19 +676,15 @@
 
             } else {
                 // --- WRONG ---
-                // 1. Reset Score
                 score = 0;
                 updateScoreUI();
 
-                // 2. Button Visuals (Mark as wrong and disable)
                 btnElement.className = getButtonClass('wrong');
                 btnElement.disabled = true;
 
-                // 3. Global Visuals
                 cardContainer.classList.add('animate-shake');
                 questionChar.classList.add('text-red-500');
 
-                // Remove red text/shake after a short while (so they can try again)
                 setTimeout(() => {
                      cardContainer.classList.remove('animate-shake');
                      questionChar.classList.remove('text-red-500');

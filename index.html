@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ฝึกภาษาญี่ปุ่น: ครบวงจร</title>
-    <!-- Tailwind CSS -->
+    <title>ฝึกภาษาญี่ปุ่น: ครบวงจร (เพิ่มคันจิ)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom Font */
@@ -46,7 +45,6 @@
 </head>
 <body class="bg-rose-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-500" id="main-body">
 
-    <!-- ================= MENU SCREEN ================= -->
     <div id="menu-screen" class="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto animate-pop pb-12">
         
         <div class="text-center mb-6">
@@ -58,7 +56,6 @@
         </div>
 
         <div class="w-full space-y-3">
-            <!-- Hiragana Btn -->
             <button onclick="startGame('hiragana')" class="w-full relative bg-white active:bg-rose-50 p-4 rounded-2xl shadow-sm border-2 border-rose-100 active:border-rose-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
                     <span class="block text-lg font-bold text-rose-600">Hiragana</span>
@@ -67,7 +64,6 @@
                 <span class="text-3xl text-rose-100 font-bold">あ</span>
             </button>
 
-            <!-- Katakana Btn -->
             <button onclick="startGame('katakana')" class="w-full relative bg-white active:bg-blue-50 p-4 rounded-2xl shadow-sm border-2 border-blue-100 active:border-blue-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
                     <span class="block text-lg font-bold text-blue-600">Katakana</span>
@@ -76,11 +72,10 @@
                 <span class="text-3xl text-blue-100 font-bold">ア</span>
             </button>
             
-            <!-- Reading Practice Btn (NEW) -->
             <button onclick="startGame('reading')" class="w-full relative bg-white active:bg-violet-50 p-4 rounded-2xl shadow-sm border-2 border-violet-100 active:border-violet-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
                     <span class="block text-lg font-bold text-violet-600">ฝึกอ่าน (สำหรับมือใหม่)</span>
-                    <span class="text-xs text-slate-400">ศัพท์ + แปลไทย ➔ เลือกคำอ่าน</span>
+                    <span class="text-xs text-slate-400">ศัพท์ + คันจิ ➔ เลือกคำอ่าน</span>
                 </div>
                 <div class="flex flex-col items-center">
                     <span class="text-2xl text-violet-200 font-bold leading-none">よ</span>
@@ -88,7 +83,6 @@
                 </div>
             </button>
 
-            <!-- N5 Vocab Btn -->
             <button onclick="startGame('n5')" class="w-full relative bg-white active:bg-emerald-50 p-4 rounded-2xl shadow-sm border-2 border-emerald-100 active:border-emerald-300 transition-all text-left flex items-center justify-between group active:scale-[0.98]">
                 <div>
                     <span class="block text-lg font-bold text-emerald-600">จำศัพท์ N5</span>
@@ -97,7 +91,6 @@
                 <span class="text-3xl text-emerald-100 font-bold">語</span>
             </button>
 
-            <!-- Mixed Btn -->
             <button onclick="startGame('mixed')" class="w-full relative bg-gradient-to-r from-rose-500 to-orange-400 active:opacity-90 p-4 rounded-2xl shadow-lg shadow-rose-200 transition-all text-left flex items-center justify-between text-white active:scale-[0.98]">
                 <div>
                     <span class="block text-lg font-bold">รวมตัวอักษร (Mixed)</span>
@@ -112,10 +105,8 @@
         <p class="mt-8 text-xs text-slate-400">© 2025 Japanese Quiz App</p>
     </div>
 
-    <!-- ================= GAME SCREEN ================= -->
     <div id="game-screen" class="hidden flex-1 flex-col items-center py-6 px-4 w-full max-w-md mx-auto">
         
-        <!-- Navbar -->
         <div class="w-full flex justify-between items-center mb-6">
             <button onclick="returnToMenu()" class="p-3 bg-white rounded-xl shadow-sm text-slate-400 active:text-slate-600 active:scale-95 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -126,7 +117,6 @@
             <div class="w-10"></div>
         </div>
 
-        <!-- Score Board -->
         <div class="w-full flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
             <div class="flex flex-col">
                 <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">คะแนนต่อเนื่อง</span>
@@ -141,23 +131,23 @@
             </div>
         </div>
 
-        <!-- Question Card -->
         <div id="card-container" class="relative w-full bg-white rounded-3xl shadow-xl p-8 mb-4 flex flex-col items-center justify-center min-h-[260px] transition-all duration-200 border-2 border-transparent">
             
             <div id="sparkle-icon" class="hidden absolute top-4 right-4 text-green-500 animate-bounce-in">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 3v4"/><path d="M3 5h4"/><path d="M3 9h4"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 3v4"/><path d="M3 5h4"/><path d="M3 9h4"/></svg>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-2">
                 <span id="question-label" class="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full">นี่คือตัวอะไร?</span>
             </div>
+
+            <p id="question-kanji" class="text-4xl md:text-5xl font-bold text-slate-200 mb-1 transition-all">
+                </p>
             
-            <!-- Question Text -->
             <h1 id="question-char" class="text-center font-black mb-1 text-slate-800 transition-all duration-200 break-words w-full">
                 ?
             </h1>
             
-            <!-- Secondary Text (Meaning) - Visible mainly in Reading Mode -->
             <p id="question-sub" class="hidden text-slate-500 text-lg font-medium mb-4">
                 (ความหมาย)
             </p>
@@ -167,12 +157,9 @@
             </div>
         </div>
 
-        <!-- Options Grid -->
         <div id="options-grid" class="w-full grid grid-cols-2 gap-3 mb-6">
-            <!-- Buttons injected by JS -->
-        </div>
+            </div>
 
-        <!-- Reset Button -->
         <button onclick="resetScore()" class="mt-auto flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors text-xs p-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12"/><path d="M3 3v9h9"/></svg>
             <span>เริ่มใหม่ / รีเซ็ตคะแนน</span>
@@ -180,7 +167,6 @@
 
     </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
     <script>
         // --- DATASETS ---
         const hiraganaData = [
@@ -219,203 +205,203 @@
             { char: 'パ', romaji: 'pa', thai: 'พะ' }, { char: 'ピ', romaji: 'pi', thai: 'พิ' }, { char: 'プ', romaji: 'pu', thai: 'พุ' }, { char: 'ペ', romaji: 'pe', thai: 'เพะ' }, { char: 'ポ', romaji: 'po', thai: 'โพะ' },
         ];
 
-        // --- N5 VOCABULARY (~200 Items with Reading) ---
+        // --- N5 VOCABULARY (~200 Items with Reading & Kanji) ---
         const n5VocabData = [
             // Pronouns & People
-            { char: 'わたし', reading: 'วา-ตา-ชิ', thai: 'ฉัน/ผม' },
-            { char: 'あなた', reading: 'อะ-นา-ตะ', thai: 'คุณ' },
-            { char: 'ひと', reading: 'ฮิ-โตะ', thai: 'คน' },
-            { char: 'こども', reading: 'โค-โด-โมะ', thai: 'เด็ก' },
-            { char: 'おとこ', reading: 'โอ-โต-โกะ', thai: 'ผู้ชาย' },
-            { char: 'おんな', reading: 'ออน-นะ', thai: 'ผู้หญิง' },
-            { char: 'せんせい', reading: 'เซ็น-เซ', thai: 'ครู/อาจารย์' },
-            { char: 'がくせい', reading: 'กะ-คุ-เซ', thai: 'นักเรียน' },
-            { char: 'ともだち', reading: 'โท-โม-ดา-จิ', thai: 'เพื่อน' },
-            { char: 'いしゃ', reading: 'อิ-ชะ', thai: 'หมอ' },
-            { char: 'おとな', reading: 'โอ-โต-นะ', thai: 'ผู้ใหญ่' },
-            { char: 'がいこくじん', reading: 'ไก-โค-คุ-จิน', thai: 'ชาวต่างชาติ' },
+            { char: 'わたし', kanji: '私', reading: 'วา-ตา-ชิ', thai: 'ฉัน/ผม' },
+            { char: 'あなた', kanji: '', reading: 'อะ-นา-ตะ', thai: 'คุณ' },
+            { char: 'ひと', kanji: '人', reading: 'ฮิ-โตะ', thai: 'คน' },
+            { char: 'こども', kanji: '子供', reading: 'โค-โด-โมะ', thai: 'เด็ก' },
+            { char: 'おとこ', kanji: '男', reading: 'โอ-โต-โกะ', thai: 'ผู้ชาย' },
+            { char: 'おんな', kanji: '女', reading: 'ออน-นะ', thai: 'ผู้หญิง' },
+            { char: 'せんせい', kanji: '先生', reading: 'เซ็น-เซ', thai: 'ครู/อาจารย์' },
+            { char: 'がくせい', kanji: '学生', reading: 'กะ-คุ-เซ', thai: 'นักเรียน' },
+            { char: 'ともだち', kanji: '友達', reading: 'โท-โม-ดา-จิ', thai: 'เพื่อน' },
+            { char: 'いしゃ', kanji: '医者', reading: 'อิ-ชะ', thai: 'หมอ' },
+            { char: 'おとな', kanji: '大人', reading: 'โอ-โต-นะ', thai: 'ผู้ใหญ่' },
+            { char: 'がいこくじん', kanji: '外国人', reading: 'ไก-โค-คุ-จิน', thai: 'ชาวต่างชาติ' },
             
             // Family
-            { char: 'かぞく', reading: 'คา-โซ-คุ', thai: 'ครอบครัว' },
-            { char: 'ちち', reading: 'ชิ-ชิ', thai: 'พ่อ (ของฉัน)' },
-            { char: 'はは', reading: 'ฮะ-ฮะ', thai: 'แม่ (ของฉัน)' },
-            { char: 'あに', reading: 'อะ-นิ', thai: 'พี่ชาย (ของฉัน)' },
-            { char: 'あね', reading: 'อะ-เนะ', thai: 'พี่สาว (ของฉัน)' },
-            { char: 'おとうと', reading: 'โอ-โท-โตะ', thai: 'น้องชาย' },
-            { char: 'いもうと', reading: 'อิ-โม-โตะ', thai: 'น้องสาว' },
-            { char: 'おとうさん', reading: 'โอ-โต-ซัง', thai: 'คุณพ่อ' },
-            { char: 'おかあさん', reading: 'โอ-คา-ซัง', thai: 'คุณแม่' },
-            { char: 'おじいさん', reading: 'โอ-จี-ซัง', thai: 'คุณปู่/ตา' },
-            { char: 'おばあさん', reading: 'โอ-บา-ซัง', thai: 'คุณย่า/ยาย' },
+            { char: 'かぞく', kanji: '家族', reading: 'คา-โซ-คุ', thai: 'ครอบครัว' },
+            { char: 'ちち', kanji: '父', reading: 'ชิ-ชิ', thai: 'พ่อ (ของฉัน)' },
+            { char: 'はは', kanji: '母', reading: 'ฮะ-ฮะ', thai: 'แม่ (ของฉัน)' },
+            { char: 'あに', kanji: '兄', reading: 'อะ-นิ', thai: 'พี่ชาย (ของฉัน)' },
+            { char: 'あね', kanji: '姉', reading: 'อะ-เนะ', thai: 'พี่สาว (ของฉัน)' },
+            { char: 'おとうと', kanji: '弟', reading: 'โอ-โท-โตะ', thai: 'น้องชาย' },
+            { char: 'いもうと', kanji: '妹', reading: 'อิ-โม-โตะ', thai: 'น้องสาว' },
+            { char: 'おとうさん', kanji: 'お父さん', reading: 'โอ-โต-ซัง', thai: 'คุณพ่อ' },
+            { char: 'おかあさん', kanji: 'お母さん', reading: 'โอ-คา-ซัง', thai: 'คุณแม่' },
+            { char: 'おじいさん', kanji: 'お爺さん', reading: 'โอ-จี-ซัง', thai: 'คุณปู่/ตา' },
+            { char: 'おばあさん', kanji: 'お婆さん', reading: 'โอ-บา-ซัง', thai: 'คุณย่า/ยาย' },
 
             // Time & Days
-            { char: 'いま', reading: 'อิ-มะ', thai: 'ตอนนี้' },
-            { char: 'きょう', reading: 'เคียว', thai: 'วันนี้' },
-            { char: 'きのう', reading: 'คิ-โน', thai: 'เมื่อวาน' },
-            { char: 'あした', reading: 'อะ-ชิ-ตะ', thai: 'พรุ่งนี้' },
-            { char: 'あさ', reading: 'อะ-ซะ', thai: 'ตอนเช้า' },
-            { char: 'ひる', reading: 'ฮิ-รุ', thai: 'ตอนกลางวัน' },
-            { char: 'ばん', reading: 'บัง', thai: 'ตอนเย็น' },
-            { char: 'よる', reading: 'โย-รุ', thai: 'ตอนกลางคืน' },
-            { char: 'まいにち', reading: 'ไม-นิ-ชิ', thai: 'ทุกวัน' },
-            { char: 'じかん', reading: 'จิ-คัง', thai: 'เวลา' },
-            { char: 'げつようび', reading: 'เก็ท-สึ-โย-บิ', thai: 'วันจันทร์' },
-            { char: 'かようび', reading: 'คะ-โย-บิ', thai: 'วันอังคาร' },
-            { char: 'すいようび', reading: 'ซุ-อิ-โย-บิ', thai: 'วันพุธ' },
-            { char: 'もくようび', reading: 'โม-คุ-โย-บิ', thai: 'วันพฤหัสบดี' },
-            { char: 'きんようび', reading: 'คิน-โย-บิ', thai: 'วันศุกร์' },
-            { char: 'どようび', reading: 'โด-โย-บิ', thai: 'วันเสาร์' },
-            { char: 'にちようび', reading: 'นิ-ชิ-โย-บิ', thai: 'วันอาทิตย์' },
-            { char: 'せんしゅう', reading: 'เซ็น-ชู', thai: 'สัปดาห์ที่แล้ว' },
-            { char: 'こんしゅう', reading: 'คน-ชู', thai: 'สัปดาห์นี้' },
-            { char: 'らいしゅう', reading: 'ไร-ชู', thai: 'สัปดาห์หน้า' },
+            { char: 'いま', kanji: '今', reading: 'อิ-มะ', thai: 'ตอนนี้' },
+            { char: 'きょう', kanji: '今日', reading: 'เคียว', thai: 'วันนี้' },
+            { char: 'きのう', kanji: '昨日', reading: 'คิ-โน', thai: 'เมื่อวาน' },
+            { char: 'あした', kanji: '明日', reading: 'อะ-ชิ-ตะ', thai: 'พรุ่งนี้' },
+            { char: 'あさ', kanji: '朝', reading: 'อะ-ซะ', thai: 'ตอนเช้า' },
+            { char: 'ひる', kanji: '昼', reading: 'ฮิ-รุ', thai: 'ตอนกลางวัน' },
+            { char: 'ばん', kanji: '晩', reading: 'บัง', thai: 'ตอนเย็น' },
+            { char: 'よる', kanji: '夜', reading: 'โย-รุ', thai: 'ตอนกลางคืน' },
+            { char: 'まいにち', kanji: '毎日', reading: 'ไม-นิ-ชิ', thai: 'ทุกวัน' },
+            { char: 'じかん', kanji: '時間', reading: 'จิ-คัง', thai: 'เวลา' },
+            { char: 'げつようび', kanji: '月曜日', reading: 'เก็ท-สึ-โย-บิ', thai: 'วันจันทร์' },
+            { char: 'かようび', kanji: '火曜日', reading: 'คะ-โย-บิ', thai: 'วันอังคาร' },
+            { char: 'すいようび', kanji: '水曜日', reading: 'ซุ-อิ-โย-บิ', thai: 'วันพุธ' },
+            { char: 'もくようび', kanji: '木曜日', reading: 'โม-คุ-โย-บิ', thai: 'วันพฤหัสบดี' },
+            { char: 'きんようび', kanji: '金曜日', reading: 'คิน-โย-บิ', thai: 'วันศุกร์' },
+            { char: 'どようび', kanji: '土曜日', reading: 'โด-โย-บิ', thai: 'วันเสาร์' },
+            { char: 'にちようび', kanji: '日曜日', reading: 'นิ-ชิ-โย-บิ', thai: 'วันอาทิตย์' },
+            { char: 'せんしゅう', kanji: '先週', reading: 'เซ็น-ชู', thai: 'สัปดาห์ที่แล้ว' },
+            { char: 'こんしゅう', kanji: '今週', reading: 'คน-ชู', thai: 'สัปดาห์นี้' },
+            { char: 'らいしゅう', kanji: '来週', reading: 'ไร-ชู', thai: 'สัปดาห์หน้า' },
 
-            // Greetings & Expressions
-            { char: 'おはよう', reading: 'โอ-ฮา-โย', thai: 'สวัสดีตอนเช้า' },
-            { char: 'こんにちは', reading: 'คน-นิ-ชิ-วะ', thai: 'สวัสดี' },
-            { char: 'こんばんは', reading: 'คม-บัง-วะ', thai: 'สวัสดีตอนเย็น' },
-            { char: 'さようなら', reading: 'ซา-โย-นา-ระ', thai: 'ลาก่อน' },
-            { char: 'ありがとう', reading: 'อะ-ริ-กา-โตะ', thai: 'ขอบคุณ' },
-            { char: 'すみません', reading: 'ซุ-มิ-มา-เซ็น', thai: 'ขอโทษ' },
-            { char: 'はい', reading: 'ไฮ', thai: 'ใช่/ครับ/ค่ะ' },
-            { char: 'いいえ', reading: 'อี-เอะ', thai: 'ไม่/เปล่า' },
-            { char: 'はじめまして', reading: 'ฮา-จิ-เม-มา-ชิ-เตะ', thai: 'ยินดีที่ได้รู้จัก' },
+            // Greetings & Expressions (Usually Kana only, some have Kanji but rarely used in N5)
+            { char: 'おはよう', kanji: '', reading: 'โอ-ฮา-โย', thai: 'สวัสดีตอนเช้า' },
+            { char: 'こんにちは', kanji: '', reading: 'คน-นิ-ชิ-วะ', thai: 'สวัสดี' },
+            { char: 'こんばんは', kanji: '', reading: 'คม-บัง-วะ', thai: 'สวัสดีตอนเย็น' },
+            { char: 'さようなら', kanji: '', reading: 'ซา-โย-นา-ระ', thai: 'ลาก่อน' },
+            { char: 'ありがとう', kanji: '', reading: 'อะ-ริ-กา-โตะ', thai: 'ขอบคุณ' },
+            { char: 'すみません', kanji: '', reading: 'ซุ-มิ-มา-เซ็น', thai: 'ขอโทษ' },
+            { char: 'はい', kanji: '', reading: 'ไฮ', thai: 'ใช่/ครับ/ค่ะ' },
+            { char: 'いいえ', kanji: '', reading: 'อี-เอะ', thai: 'ไม่/เปล่า' },
+            { char: 'はじめまして', kanji: '', reading: 'ฮา-จิ-เม-มา-ชิ-เตะ', thai: 'ยินดีที่ได้รู้จัก' },
 
             // Places
-            { char: 'がっこう', reading: 'กัค-โค', thai: 'โรงเรียน' },
-            { char: 'いえ', reading: 'อิ-เอะ', thai: 'บ้าน' },
-            { char: 'へや', reading: 'เฮ-ยะ', thai: 'ห้อง' },
-            { char: 'トイレ', reading: 'โท-อิ-เระ', thai: 'ห้องน้ำ' },
-            { char: 'だいどころ', reading: 'ได-โด-โค-โระ', thai: 'ห้องครัว' },
-            { char: 'かいしゃ', reading: 'ไค-ฉะ', thai: 'บริษัท' },
-            { char: 'びょういん', reading: 'เบียว-อิน', thai: 'โรงพยาบาล' },
-            { char: 'ぎんこう', reading: 'กิน-โค', thai: 'ธนาคาร' },
-            { char: 'ゆうびんきょく', reading: 'ยู-บิน-เคียว-คุ', thai: 'ที่ทำการไปรษณีย์' },
-            { char: 'えき', reading: 'เอะ-กิ', thai: 'สถานีรถไฟ' },
-            { char: 'みせ', reading: 'มิ-เสะ', thai: 'ร้านค้า' },
-            { char: 'デパート', reading: 'เด-ปา-โตะ', thai: 'ห้างสรรพสินค้า' },
-            { char: 'レストラン', reading: 'เร-สุ-โต-รัน', thai: 'ร้านอาหาร' },
-            { char: 'こうえん', reading: 'โค-เอ็น', thai: 'สวนสาธารณะ' },
-            { char: 'くに', reading: 'คุ-นิ', thai: 'ประเทศ' },
+            { char: 'がっこう', kanji: '学校', reading: 'กัค-โค', thai: 'โรงเรียน' },
+            { char: 'いえ', kanji: '家', reading: 'อิ-เอะ', thai: 'บ้าน' },
+            { char: 'へや', kanji: '部屋', reading: 'เฮ-ยะ', thai: 'ห้อง' },
+            { char: 'トイレ', kanji: '', reading: 'โท-อิ-เระ', thai: 'ห้องน้ำ' },
+            { char: 'だいどころ', kanji: '台所', reading: 'ได-โด-โค-โระ', thai: 'ห้องครัว' },
+            { char: 'かいしゃ', kanji: '会社', reading: 'ไค-ฉะ', thai: 'บริษัท' },
+            { char: 'びょういん', kanji: '病院', reading: 'เบียว-อิน', thai: 'โรงพยาบาล' },
+            { char: 'ぎんこう', kanji: '銀行', reading: 'กิน-โค', thai: 'ธนาคาร' },
+            { char: 'ゆうびんきょく', kanji: '郵便局', reading: 'ยู-บิน-เคียว-คุ', thai: 'ที่ทำการไปรษณีย์' },
+            { char: 'えき', kanji: '駅', reading: 'เอะ-กิ', thai: 'สถานีรถไฟ' },
+            { char: 'みせ', kanji: '店', reading: 'มิ-เสะ', thai: 'ร้านค้า' },
+            { char: 'デパート', kanji: '', reading: 'เด-ปา-โตะ', thai: 'ห้างสรรพสินค้า' },
+            { char: 'レストラン', kanji: '', reading: 'เร-สุ-โต-รัน', thai: 'ร้านอาหาร' },
+            { char: 'こうえん', kanji: '公園', reading: 'โค-เอ็น', thai: 'สวนสาธารณะ' },
+            { char: 'くに', kanji: '国', reading: 'คุ-นิ', thai: 'ประเทศ' },
 
             // Things
-            { char: 'ほん', reading: 'ฮน', thai: 'หนังสือ' },
-            { char: 'じしょ', reading: 'จิ-โชะ', thai: 'พจนานุกรม' },
-            { char: 'えんぴつ', reading: 'เอ็น-ปิ-สึ', thai: 'ดินสอ' },
-            { char: 'かばん', reading: 'คะ-บัง', thai: 'กระเป๋า' },
-            { char: 'とけい', reading: 'โท-เก', thai: 'นาฬิกา' },
-            { char: 'かさ', reading: 'คะ-ซะ', thai: 'ร่ม' },
-            { char: 'おかね', reading: 'โอ-คา-เนะ', thai: 'เงิน' },
-            { char: 'くつ', reading: 'คุ-สึ', thai: 'รองเท้า' },
-            { char: 'しんぶん', reading: 'ชิม-บุน', thai: 'หนังสือพิมพ์' },
-            { char: 'つくえ', reading: 'สึ-คุ-เอะ', thai: 'โต๊ะ' },
-            { char: 'いす', reading: 'อิ-สึ', thai: 'เก้าอี้' },
-            { char: 'でんわ', reading: 'เด็น-วะ', thai: 'โทรศัพท์' },
-            { char: 'じてんしゃ', reading: 'จิ-เต็น-ฉะ', thai: 'จักรยาน' },
-            { char: 'くるま', reading: 'คุ-รุ-มะ', thai: 'รถยนต์' },
-            { char: 'でんしゃ', reading: 'เด็น-ฉะ', thai: 'รถไฟฟ้า' },
-            { char: 'バス', reading: 'บะ-สึ', thai: 'รถเมล์' },
-            { char: 'ひこうき', reading: 'ฮิ-โค-กิ', thai: 'เครื่องบิน' },
-            { char: 'てがみ', reading: 'เท-กะ-มิ', thai: 'จดหมาย' },
-            { char: 'しゃしん', reading: 'ชา-ชิน', thai: 'รูปถ่าย' },
-            { char: 'きっぷ', reading: 'คิป-ปุ', thai: 'ตั๋ว' },
+            { char: 'ほん', kanji: '本', reading: 'ฮน', thai: 'หนังสือ' },
+            { char: 'じしょ', kanji: '辞書', reading: 'จิ-โชะ', thai: 'พจนานุกรม' },
+            { char: 'えんぴつ', kanji: '鉛筆', reading: 'เอ็น-ปิ-สึ', thai: 'ดินสอ' },
+            { char: 'かばん', kanji: '鞄', reading: 'คะ-บัง', thai: 'กระเป๋า' },
+            { char: 'とけい', kanji: '時計', reading: 'โท-เก', thai: 'นาฬิกา' },
+            { char: 'かさ', kanji: '傘', reading: 'คะ-ซะ', thai: 'ร่ม' },
+            { char: 'おかね', kanji: 'お金', reading: 'โอ-คา-เนะ', thai: 'เงิน' },
+            { char: 'くつ', kanji: '靴', reading: 'คุ-สึ', thai: 'รองเท้า' },
+            { char: 'しんぶん', kanji: '新聞', reading: 'ชิม-บุน', thai: 'หนังสือพิมพ์' },
+            { char: 'つくえ', kanji: '机', reading: 'สึ-คุ-เอะ', thai: 'โต๊ะ' },
+            { char: 'いす', kanji: '椅子', reading: 'อิ-สึ', thai: 'เก้าอี้' },
+            { char: 'でんわ', kanji: '電話', reading: 'เด็น-วะ', thai: 'โทรศัพท์' },
+            { char: 'じてんしゃ', kanji: '自転車', reading: 'จิ-เต็น-ฉะ', thai: 'จักรยาน' },
+            { char: 'くるま', kanji: '車', reading: 'คุ-รุ-มะ', thai: 'รถยนต์' },
+            { char: 'でんしゃ', kanji: '電車', reading: 'เด็น-ฉะ', thai: 'รถไฟฟ้า' },
+            { char: 'バス', kanji: '', reading: 'บะ-สึ', thai: 'รถเมล์' },
+            { char: 'ひこうき', kanji: '飛行機', reading: 'ฮิ-โค-กิ', thai: 'เครื่องบิน' },
+            { char: 'てがみ', kanji: '手紙', reading: 'เท-กะ-มิ', thai: 'จดหมาย' },
+            { char: 'しゃしん', kanji: '写真', reading: 'ชา-ชิน', thai: 'รูปถ่าย' },
+            { char: 'きっぷ', kanji: '切符', reading: 'คิป-ปุ', thai: 'ตั๋ว' },
 
             // Food & Drink
-            { char: 'ごはん', reading: 'โก-ฮัง', thai: 'ข้าว/อาหาร' },
-            { char: 'パン', reading: 'ปัง', thai: 'ขนมปัง' },
-            { char: 'にく', reading: 'นิ-คุ', thai: 'เนื้อ' },
-            { char: 'さかな', reading: 'ซะ-กะ-นะ', thai: 'ปลา' },
-            { char: 'やさい', reading: 'ยะ-ไซ', thai: 'ผัก' },
-            { char: 'くだもの', reading: 'คุ-ดา-โม-โนะ', thai: 'ผลไม้' },
-            { char: 'たまご', reading: 'ทะ-มะ-โกะ', thai: 'ไข่' },
-            { char: 'みず', reading: 'มิ-ซุ', thai: 'น้ำ' },
-            { char: 'おちゃ', reading: 'โอ-ชะ', thai: 'ชา' },
-            { char: 'ぎゅうにゅう', reading: 'กิว-นิว', thai: 'นมวัว' },
-            { char: 'コーヒー', reading: 'โค-ฮี', thai: 'กาแฟ' },
-            { char: 'おさけ', reading: 'โอ-ซะ-เกะ', thai: 'เหล้า' },
-            { char: 'りょうり', reading: 'เรียว-ริ', thai: 'อาหาร/การทำอาหาร' },
+            { char: 'ごはん', kanji: 'ご飯', reading: 'โก-ฮัง', thai: 'ข้าว/อาหาร' },
+            { char: 'パン', kanji: '', reading: 'ปัง', thai: 'ขนมปัง' },
+            { char: 'にく', kanji: '肉', reading: 'นิ-คุ', thai: 'เนื้อ' },
+            { char: 'さかな', kanji: '魚', reading: 'ซะ-กะ-นะ', thai: 'ปลา' },
+            { char: 'やさい', kanji: '野菜', reading: 'ยะ-ไซ', thai: 'ผัก' },
+            { char: 'くだもの', kanji: '果物', reading: 'คุ-ดา-โม-โนะ', thai: 'ผลไม้' },
+            { char: 'たまご', kanji: '卵', reading: 'ทะ-มะ-โกะ', thai: 'ไข่' },
+            { char: 'みず', kanji: '水', reading: 'มิ-ซุ', thai: 'น้ำ' },
+            { char: 'おちゃ', kanji: 'お茶', reading: 'โอ-ชะ', thai: 'ชา' },
+            { char: 'ぎゅうにゅう', kanji: '牛乳', reading: 'กิว-นิว', thai: 'นมวัว' },
+            { char: 'コーヒー', kanji: '', reading: 'โค-ฮี', thai: 'กาแฟ' },
+            { char: 'おさけ', kanji: 'お酒', reading: 'โอ-ซะ-เกะ', thai: 'เหล้า' },
+            { char: 'りょうり', kanji: '料理', reading: 'เรียว-ริ', thai: 'อาหาร/การทำอาหาร' },
 
             // Adjectives
-            { char: 'おおきい', reading: 'โอ-คี', thai: 'ใหญ่' },
-            { char: 'ちいさい', reading: 'ชี-ไซ', thai: 'เล็ก' },
-            { char: 'あたらしい', reading: 'อะ-ตะ-รา-ชี', thai: 'ใหม่' },
-            { char: 'ふるい', reading: 'ฟุ-รุ-อิ', thai: 'เก่า' },
-            { char: 'いい', reading: 'อี', thai: 'ดี' },
-            { char: 'わるい', reading: 'วะ-รุ-อิ', thai: 'เลว/ไม่ดี' },
-            { char: 'あつい', reading: 'อะ-สึ-อิ', thai: 'ร้อน' },
-            { char: 'さむい', reading: 'ซะ-มุ-อิ', thai: 'หนาว' },
-            { char: 'つめたい', reading: 'สึ-เม-ไท', thai: 'เย็น (สัมผัส)' },
-            { char: 'むずかしい', reading: 'มุ-ซุ-กะ-ชี', thai: 'ยาก' },
-            { char: 'やさしい', reading: 'ยะ-ซะ-ชี', thai: 'ง่าย/ใจดี' },
-            { char: 'たかい', reading: 'ทะ-ไค', thai: 'แพง/สูง' },
-            { char: 'やすい', reading: 'ยะ-สุ-อิ', thai: 'ราคาถูก' },
-            { char: 'おいしい', reading: 'โอ-อิ-ชี', thai: 'อร่อย' },
-            { char: 'たのしい', reading: 'ทะ-โน-ชี', thai: 'สนุก' },
-            { char: 'おもしろい', reading: 'โอ-โม-ชิ-โร-อิ', thai: 'น่าสนใจ' },
-            { char: 'いそがしい', reading: 'อิ-โซ-กะ-ชี', thai: 'ยุ่ง' },
-            { char: 'しろい', reading: 'ชิ-โร-อิ', thai: 'สีขาว' },
-            { char: 'くろい', reading: 'คุ-โร-อิ', thai: 'สีดำ' },
-            { char: 'あかい', reading: 'อะ-ไค', thai: 'สีแดง' },
-            { char: 'あおい', reading: 'อะ-โอ-อิ', thai: 'สีน้ำเงิน' },
-            { char: 'すき', reading: 'สุ-กิ', thai: 'ชอบ' },
-            { char: 'きらい', reading: 'คิ-ไร', thai: 'เกลียด' },
-            { char: 'きれい', reading: 'คิ-เร', thai: 'สวย/สะอาด' },
-            { char: 'ゆうめい', reading: 'ยู-เม', thai: 'มีชื่อเสียง' },
-            { char: 'しずか', reading: 'ชิ-ซุ-กะ', thai: 'เงียบ' },
-            { char: 'げんき', reading: 'เก็ง-กิ', thai: 'สบายดี' },
-            { char: 'ひま', reading: 'ฮิ-มะ', thai: 'ว่าง' },
-            { char: 'たいせつ', reading: 'ไท-เซ็ต-สึ', thai: 'สำคัญ' },
-            { char: 'じょうず', reading: 'โจ-ซุ', thai: 'เก่ง' },
-            { char: 'へた', reading: 'เฮ-ตะ', thai: 'ไม่เก่ง' },
+            { char: 'おおきい', kanji: '大きい', reading: 'โอ-คี', thai: 'ใหญ่' },
+            { char: 'ちいさい', kanji: '小さい', reading: 'ชี-ไซ', thai: 'เล็ก' },
+            { char: 'あたらしい', kanji: '新しい', reading: 'อะ-ตะ-รา-ชี', thai: 'ใหม่' },
+            { char: 'ふるい', kanji: '古い', reading: 'ฟุ-รุ-อิ', thai: 'เก่า' },
+            { char: 'いい', kanji: '', reading: 'อี', thai: 'ดี' },
+            { char: 'わるい', kanji: '悪い', reading: 'วะ-รุ-อิ', thai: 'เลว/ไม่ดี' },
+            { char: 'あつい', kanji: '暑い', reading: 'อะ-สึ-อิ', thai: 'ร้อน' },
+            { char: 'さむい', kanji: '寒い', reading: 'ซะ-มุ-อิ', thai: 'หนาว' },
+            { char: 'つめたい', kanji: '冷たい', reading: 'สึ-เม-ไท', thai: 'เย็น (สัมผัส)' },
+            { char: 'むずかしい', kanji: '難しい', reading: 'มุ-ซุ-กะ-ชี', thai: 'ยาก' },
+            { char: 'やさしい', kanji: '易しい', reading: 'ยะ-ซะ-ชี', thai: 'ง่าย/ใจดี' },
+            { char: 'たかい', kanji: '高い', reading: 'ทะ-ไค', thai: 'แพง/สูง' },
+            { char: 'やすい', kanji: '安い', reading: 'ยะ-สุ-อิ', thai: 'ราคาถูก' },
+            { char: 'おいしい', kanji: '美味しい', reading: 'โอ-อิ-ชี', thai: 'อร่อย' },
+            { char: 'たのしい', kanji: '楽しい', reading: 'ทะ-โน-ชี', thai: 'สนุก' },
+            { char: 'おもしろい', kanji: '面白い', reading: 'โอ-โม-ชิ-โร-อิ', thai: 'น่าสนใจ' },
+            { char: 'いそがしい', kanji: '忙しい', reading: 'อิ-โซ-กะ-ชี', thai: 'ยุ่ง' },
+            { char: 'しろい', kanji: '白い', reading: 'ชิ-โร-อิ', thai: 'สีขาว' },
+            { char: 'くろい', kanji: '黒い', reading: 'คุ-โร-อิ', thai: 'สีดำ' },
+            { char: 'あかい', kanji: '赤い', reading: 'อะ-ไค', thai: 'สีแดง' },
+            { char: 'あおい', kanji: '青い', reading: 'อะ-โอ-อิ', thai: 'สีน้ำเงิน' },
+            { char: 'すき', kanji: '好き', reading: 'สุ-กิ', thai: 'ชอบ' },
+            { char: 'きらい', kanji: '嫌い', reading: 'คิ-ไร', thai: 'เกลียด' },
+            { char: 'きれい', kanji: '綺麗', reading: 'คิ-เร', thai: 'สวย/สะอาด' },
+            { char: 'ゆうめい', kanji: '有名', reading: 'ยู-เม', thai: 'มีชื่อเสียง' },
+            { char: 'しずか', kanji: '静か', reading: 'ชิ-ซุ-กะ', thai: 'เงียบ' },
+            { char: 'げんき', kanji: '元気', reading: 'เก็ง-กิ', thai: 'สบายดี' },
+            { char: 'ひま', kanji: '暇', reading: 'ฮิ-มะ', thai: 'ว่าง' },
+            { char: 'たいせつ', kanji: '大切', reading: 'ไท-เซ็ต-สึ', thai: 'สำคัญ' },
+            { char: 'じょうず', kanji: '上手', reading: 'โจ-ซุ', thai: 'เก่ง' },
+            { char: 'へた', kanji: '下手', reading: 'เฮ-ตะ', thai: 'ไม่เก่ง' },
 
             // Verbs
-            { char: 'たべます', reading: 'ทะ-เบ-มา-สึ', thai: 'กิน' },
-            { char: 'のみます', reading: 'โน-มิ-มา-สึ', thai: 'ดื่ม' },
-            { char: 'かいます', reading: 'ไค-มา-สึ', thai: 'ซื้อ' },
-            { char: 'みます', reading: 'มิ-มา-สึ', thai: 'ดู' },
-            { char: 'ききます', reading: 'คิ-กิ-มา-สึ', thai: 'ฟัง/ถาม' },
-            { char: 'よみます', reading: 'โย-มิ-มา-สึ', thai: 'อ่าน' },
-            { char: 'かきます', reading: 'คะ-กิ-มา-สึ', thai: 'เขียน' },
-            { char: 'いきます', reading: 'อิ-กิ-มา-สึ', thai: 'ไป' },
-            { char: 'きます', reading: 'คิ-มา-สึ', thai: 'มา' },
-            { char: 'かえります', reading: 'คา-เอ-ริ-มา-สึ', thai: 'กลับ' },
-            { char: 'あいます', reading: 'ไอ-มา-สึ', thai: 'พบ/เจอ' },
-            { char: 'はなします', reading: 'ฮา-นา-ชิ-มา-สึ', thai: 'พูดคุย' },
-            { char: 'べんきょうします', reading: 'เบ็น-เคียว-ชิ-มา-สึ', thai: 'เรียน' },
-            { char: 'あそびます', reading: 'อะ-โซ-บิ-มา-สึ', thai: 'เที่ยวเล่น' },
-            { char: 'およぎます', reading: 'โอ-โย-กิ-มา-สึ', thai: 'ว่ายน้ำ' },
-            { char: 'まちます', reading: 'มา-ชิ-มา-สึ', thai: 'รอ' },
-            { char: 'わかります', reading: 'วา-กา-ริ-มา-สึ', thai: 'เข้าใจ' },
-            { char: 'あります', reading: 'อะ-ริ-มา-สึ', thai: 'มี (สิ่งของ)' },
-            { char: 'います', reading: 'อิ-มา-สึ', thai: 'มี/อยู่ (คน/สัตว์)' },
-            { char: 'ねます', reading: 'เน-มา-สึ', thai: 'นอน' },
-            { char: 'おきます', reading: 'โอ-กิ-มา-สึ', thai: 'ตื่น' },
-            { char: 'あげます', reading: 'อะ-เก-มา-สึ', thai: 'ให้' },
-            { char: 'もらいます', reading: 'โม-ไร-มา-สึ', thai: 'ได้รับ' },
-            { char: 'かし', reading: 'คะ-ชิ', thai: 'ให้ยืม' },
-            { char: 'かります', reading: 'คะ-ริ-มา-สึ', thai: 'ขอยืม' },
-            { char: 'おしえます', reading: 'โอ-ชิ-เอ-มา-สึ', thai: 'สอน' },
-            { char: 'ならいます', reading: 'นา-ไร-มา-สึ', thai: 'เรียนรู้' },
-            { char: 'かけます', reading: 'คะ-เก-มา-สึ', thai: 'โทรศัพท์' },
-            { char: 'はたらきます', reading: 'ฮา-ตะ-รา-กิ-มา-สึ', thai: 'ทำงาน' },
-            { char: 'はじまります', reading: 'ฮา-จิ-มา-ริ-มา-สึ', thai: 'เริ่ม' },
-            { char: 'おわります', reading: 'โอ-วะ-ริ-มา-สึ', thai: 'จบ/เสร็จ' },
+            { char: 'たべます', kanji: '食べます', reading: 'ทะ-เบ-มา-สึ', thai: 'กิน' },
+            { char: 'のみます', kanji: '飲みます', reading: 'โน-มิ-มา-สึ', thai: 'ดื่ม' },
+            { char: 'かいます', kanji: '買います', reading: 'ไค-มา-สึ', thai: 'ซื้อ' },
+            { char: 'みます', kanji: '見ます', reading: 'มิ-มา-สึ', thai: 'ดู' },
+            { char: 'ききます', kanji: '聞きます', reading: 'คิ-กิ-มา-สึ', thai: 'ฟัง/ถาม' },
+            { char: 'よみます', kanji: '読みます', reading: 'โย-มิ-มา-สึ', thai: 'อ่าน' },
+            { char: 'かきます', kanji: '書きます', reading: 'คะ-กิ-มา-สึ', thai: 'เขียน' },
+            { char: 'いきます', kanji: '行きます', reading: 'อิ-กิ-มา-สึ', thai: 'ไป' },
+            { char: 'きます', kanji: '来ます', reading: 'คิ-มา-สึ', thai: 'มา' },
+            { char: 'かえります', kanji: '帰ります', reading: 'คา-เอ-ริ-มา-สึ', thai: 'กลับ' },
+            { char: 'あいます', kanji: '会います', reading: 'ไอ-มา-สึ', thai: 'พบ/เจอ' },
+            { char: 'はなします', kanji: '話します', reading: 'ฮา-นา-ชิ-มา-สึ', thai: 'พูดคุย' },
+            { char: 'べんきょうします', kanji: '勉強します', reading: 'เบ็น-เคียว-ชิ-มา-สึ', thai: 'เรียน' },
+            { char: 'あそびます', kanji: '遊びます', reading: 'อะ-โซ-บิ-มา-สึ', thai: 'เที่ยวเล่น' },
+            { char: 'およぎます', kanji: '泳ぎます', reading: 'โอ-โย-กิ-มา-สึ', thai: 'ว่ายน้ำ' },
+            { char: 'まちます', kanji: '待ちます', reading: 'มา-ชิ-มา-สึ', thai: 'รอ' },
+            { char: 'わかります', kanji: '分かります', reading: 'วา-กา-ริ-มา-สึ', thai: 'เข้าใจ' },
+            { char: 'あります', kanji: '', reading: 'อะ-ริ-มา-สึ', thai: 'มี (สิ่งของ)' },
+            { char: 'います', kanji: '', reading: 'อิ-มา-สึ', thai: 'มี/อยู่ (คน/สัตว์)' },
+            { char: 'ねます', kanji: '寝ます', reading: 'เน-มา-สึ', thai: 'นอน' },
+            { char: 'おきます', kanji: '起きます', reading: 'โอ-กิ-มา-สึ', thai: 'ตื่น' },
+            { char: 'あげます', kanji: '', reading: 'อะ-เก-มา-สึ', thai: 'ให้' },
+            { char: 'もらいます', kanji: '', reading: 'โม-ไร-มา-สึ', thai: 'ได้รับ' },
+            { char: 'かし', kanji: '貸します', reading: 'คะ-ชิ', thai: 'ให้ยืม' },
+            { char: 'かります', kanji: '借ります', reading: 'คะ-ริ-มา-สึ', thai: 'ขอยืม' },
+            { char: 'おしえます', kanji: '教えます', reading: 'โอ-ชิ-เอ-มา-สึ', thai: 'สอน' },
+            { char: 'ならいます', kanji: '習います', reading: 'นา-ไร-มา-สึ', thai: 'เรียนรู้' },
+            { char: 'かけます', kanji: '', reading: 'คะ-เก-มา-สึ', thai: 'โทรศัพท์' },
+            { char: 'はたらきます', kanji: '働きます', reading: 'ฮา-ตะ-รา-กิ-มา-สึ', thai: 'ทำงาน' },
+            { char: 'はじまります', kanji: '始まります', reading: 'ฮา-จิ-มา-ริ-มา-สึ', thai: 'เริ่ม' },
+            { char: 'おわります', kanji: '終わります', reading: 'โอ-วะ-ริ-มา-สึ', thai: 'จบ/เสร็จ' },
 
             // Misc
-            { char: 'なまえ', reading: 'นา-มา-เอะ', thai: 'ชื่อ' },
-            { char: 'なん / なに', reading: 'นั่น/นะ-นิ', thai: 'อะไร' },
-            { char: 'だれ', reading: 'ดา-เระ', thai: 'ใคร' },
-            { char: 'どこ', reading: 'โด-โกะ', thai: 'ที่ไหน' },
-            { char: 'いつ', reading: 'อิ-สึ', thai: 'เมื่อไหร่' },
-            { char: 'どうして', reading: 'โด-ชิ-เตะ', thai: 'ทำไม' },
-            { char: 'どう', reading: 'โด', thai: 'อย่างไร' },
-            { char: 'どの', reading: 'โด-โนะ', thai: 'อันไหน/คนไหน' },
-            { char: 'これ', reading: 'โค-เระ', thai: 'อันนี้' },
-            { char: 'それ', reading: 'โซ-เระ', thai: 'อันนั้น' },
-            { char: 'あれ', reading: 'อะ-เระ', thai: 'อันโน้น' },
-            { char: 'ここ', reading: 'โค-โกะ', thai: 'ที่นี่' },
-            { char: 'そこ', reading: 'โซ-โกะ', thai: 'ที่นั่น' },
-            { char: 'あそこ', reading: 'อะ-โซ-โกะ', thai: 'ที่โน่น' },
+            { char: 'なまえ', kanji: '名前', reading: 'นา-มา-เอะ', thai: 'ชื่อ' },
+            { char: 'なん / なに', kanji: '何', reading: 'นั่น/นะ-นิ', thai: 'อะไร' },
+            { char: 'だれ', kanji: '誰', reading: 'ดา-เระ', thai: 'ใคร' },
+            { char: 'どこ', kanji: '', reading: 'โด-โกะ', thai: 'ที่ไหน' },
+            { char: 'いつ', kanji: '', reading: 'อิ-สึ', thai: 'เมื่อไหร่' },
+            { char: 'どうして', kanji: '', reading: 'โด-ชิ-เตะ', thai: 'ทำไม' },
+            { char: 'どう', kanji: '', reading: 'โด', thai: 'อย่างไร' },
+            { char: 'どの', kanji: '', reading: 'โด-โนะ', thai: 'อันไหน/คนไหน' },
+            { char: 'これ', kanji: '', reading: 'โค-เระ', thai: 'อันนี้' },
+            { char: 'それ', kanji: '', reading: 'โซ-เระ', thai: 'อันนั้น' },
+            { char: 'あれ', kanji: '', reading: 'อะ-เระ', thai: 'อันโน้น' },
+            { char: 'ここ', kanji: '', reading: 'โค-โกะ', thai: 'ที่นี่' },
+            { char: 'そこ', kanji: '', reading: 'โซ-โกะ', thai: 'ที่นั่น' },
+            { char: 'あそこ', kanji: '', reading: 'อะ-โซ-โกะ', thai: 'ที่โน่น' },
         ];
 
         // --- STATE VARIABLES ---
@@ -433,6 +419,7 @@
         const mainBody = document.getElementById('main-body');
         
         const questionChar = document.getElementById('question-char');
+        const questionKanji = document.getElementById('question-kanji');
         const questionLabel = document.getElementById('question-label');
         const questionSub = document.getElementById('question-sub');
         const feedbackText = document.getElementById('feedback-text');
@@ -481,7 +468,10 @@
         function updateTheme(mode) {
             mainBody.className = "min-h-screen flex flex-col transition-colors duration-500"; 
             scoreDisplay.className = "text-2xl font-bold transition-all";
-            questionSub.classList.add('hidden'); // Hide sub-text by default
+            questionSub.classList.add('hidden'); 
+            
+            // Default hidden
+            questionKanji.classList.add('hidden');
 
             if (mode === 'katakana') {
                 mainBody.classList.add('bg-blue-50', 'text-slate-800');
@@ -503,7 +493,7 @@
                 modeBadge.innerText = "READING";
                 scoreDisplay.classList.add('text-violet-600');
                 questionLabel.innerText = "อ่านว่าอะไร?";
-                questionSub.classList.remove('hidden'); // Show sub-text for reading mode
+                questionSub.classList.remove('hidden'); 
             } else {
                 mainBody.classList.add('bg-rose-50', 'text-slate-800');
                 modeBadge.innerText = "HIRAGANA";
@@ -539,15 +529,11 @@
                 let isDupe = false;
                 if (d.char === correct.char) isDupe = true;
                 
-                // Logic for distinct options based on mode
                 if (currentMode === 'n5') {
-                    // In N5 vocab mode, answers are meanings. Avoid same meaning.
                     if (distractors.some(dist => dist.thai === d.thai)) isDupe = true;
                 } else if (currentMode === 'reading') {
-                    // In Reading mode, answers are readings. Avoid same reading.
                     if (distractors.some(dist => dist.reading === d.reading)) isDupe = true;
                 } else {
-                    // Char modes
                     if (distractors.some(dist => dist.thai === d.thai)) isDupe = true;
                 }
                 
@@ -570,6 +556,14 @@
             // Reset UI States
             cardContainer.className = "relative w-full bg-white rounded-3xl shadow-xl p-8 mb-4 flex flex-col items-center justify-center min-h-[260px] transition-all duration-200 border-2 border-transparent animate-pop";
             
+            // --- Kanji Display Logic ---
+            if ((currentMode === 'n5' || currentMode === 'reading') && currentQuestion.kanji) {
+                questionKanji.innerText = currentQuestion.kanji;
+                questionKanji.classList.remove('hidden');
+            } else {
+                questionKanji.classList.add('hidden');
+            }
+
             questionChar.innerText = currentQuestion.char;
             
             // Sub text for Reading Mode
@@ -601,15 +595,11 @@
                 const btn = document.createElement('button');
                 btn.className = getButtonClass('default');
                 
-                // --- Determine what to show on buttons ---
                 if (currentMode === 'reading') {
-                    // Show Pronunciation (Reading)
                     btn.innerText = opt.reading;
                 } else if (currentMode === 'n5') {
-                    // Show Meaning
                     btn.innerText = opt.thai; 
                 } else {
-                    // Hiragana/Katakana/Mixed
                     btn.innerText = opt.thai;
                 }
 
@@ -655,7 +645,6 @@
                 cardContainer.classList.add('border-green-400');
                 questionChar.classList.add('text-green-500', 'scale-110');
                 
-                // Show Romaji or Reading depending on mode, but for N5 vocab usually Romaji/Reading is good feedback
                 if (currentMode === 'reading' || currentMode === 'n5') {
                      feedbackText.innerText = `ถูกต้อง! (${currentQuestion.reading})`;
                 } else {
@@ -665,13 +654,11 @@
                 feedbackText.className = "font-bold text-lg text-green-600 animate-bounce-in";
                 sparkleIcon.classList.remove('hidden');
 
-                // Disable all buttons
                 const buttons = optionsGrid.querySelectorAll('button');
                 buttons.forEach(b => {
                     if (b !== btnElement) b.disabled = true;
                 });
 
-                // Next Question
                 setTimeout(generateQuestion, 1000);
 
             } else {
@@ -709,5 +696,3 @@
     </script>
 </body>
 </html>
-
-
